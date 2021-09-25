@@ -4,10 +4,21 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] LvlMovement _movement;
+    [SerializeField] float _speed;
+    [SerializeField] RoomGenerator _creator;
+    [SerializeField] Vector3 _startPos;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    bool canMove = true;
+
+    private void Update()
     {
-        _movement.canMove = false;
+        if (canMove)
+            this.transform.Translate(0, _speed * Time.deltaTime, 0);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        _creator.GenerateRoom();
+        this.transform.position = _startPos;
     }
 }
