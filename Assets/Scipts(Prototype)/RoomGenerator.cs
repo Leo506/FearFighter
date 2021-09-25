@@ -6,9 +6,9 @@ public class RoomGenerator : MonoBehaviour
 {
     [SerializeField] GameObject[] _floorPrefabs;
     [SerializeField] GameObject[] _wallPrefabs;
+    [SerializeField] GameObject[] _obstacles;
     [SerializeField] float _roomOffset = 10.15f;
     public float timeToChange;
-    GameObject fl, wll;
     GameObject currentRoom, nextRoom;
 
     private void Start()
@@ -31,6 +31,7 @@ public class RoomGenerator : MonoBehaviour
 
         Destroy(currentRoom.gameObject);
         currentRoom = nextRoom;
+        GenerateObstacles();
     }
 
 
@@ -52,5 +53,10 @@ public class RoomGenerator : MonoBehaviour
         Instantiate(wall, room.transform);
 
         return room;
+    }
+
+    void GenerateObstacles()
+    {
+        Instantiate(_obstacles[Random.Range(0, _obstacles.Length)]);
     }
 }
