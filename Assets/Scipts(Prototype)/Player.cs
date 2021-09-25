@@ -19,6 +19,16 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         _creator.GenerateRoom();
-        this.transform.position = _startPos;
+        StartCoroutine(ResetPos());
+    }
+
+    IEnumerator ResetPos()
+    {
+        var deltaY = (this.transform.position - _startPos).magnitude / 100;
+        for (int i = 0; i < 100; i++)
+        {
+            this.transform.Translate(0, -deltaY, 0);
+            yield return new WaitForSeconds(_creator.timeToChange / 100);
+        }
     }
 }

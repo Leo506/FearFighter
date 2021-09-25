@@ -159,6 +159,7 @@ MonoBehaviour:
   - {fileID: 4376308009192389276, guid: a8d82002f4cefc543b1314d084a35a95, type: 3}
   - {fileID: 8233229360720967250, guid: 49b07e7ba0345ba49b1806488453d686, type: 3}
   _roomOffset: 10.15
+  timeToChange: 0
 --- !u!4 &245767116
 Transform:
   m_ObjectHideFlags: 0
