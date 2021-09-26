@@ -288,11 +288,11 @@ MonoBehaviour:
   - {fileID: 6818316292028655519, guid: 874e7c57c28f70643b851845492d6b62, type: 3}
   - {fileID: 4204485899682142274, guid: 73a71439552405f408008934386723c6, type: 3}
   _wallPrefabs:
-  - {fileID: 4376308009192389276, guid: a8d82002f4cefc543b1314d084a35a95, type: 3}
-  - {fileID: 8233229360720967250, guid: 49b07e7ba0345ba49b1806488453d686, type: 3}
+  - {fileID: 7095277991176640824, guid: a8d82002f4cefc543b1314d084a35a95, type: 3}
+  - {fileID: 4569570961673877199, guid: 49b07e7ba0345ba49b1806488453d686, type: 3}
   _obstacles:
-  - {fileID: 2523190522199209816, guid: 8c8d4059de67526428426b7716f9b4ef, type: 3}
-  - {fileID: 3791489324092854096, guid: 715f2d08de8eef94d87a8731dca469e3, type: 3}
+  - {fileID: 935940620674674524, guid: 715f2d08de8eef94d87a8731dca469e3, type: 3}
+  - {fileID: 6255651676155066845, guid: 8c8d4059de67526428426b7716f9b4ef, type: 3}
   _roomOffset: 10.15
   timeToChange: 3
 --- !u!4 &245767116
@@ -658,7 +658,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: -1
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!224 &1369388429
 RectTransform:
@@ -717,6 +717,7 @@ MonoBehaviour:
   _creator: {fileID: 245767115}
   _startPos: {x: 0, y: -5.5, z: -1}
   _chooseCanvas: {fileID: 1369388428}
+  _joystick: {fileID: 0}
 --- !u!50 &1974366136
 Rigidbody2D:
   serializedVersion: 4
@@ -732,12 +733,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 4
 --- !u!58 &1974366137
 CircleCollider2D:
   m_ObjectHideFlags: 0
