@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] float _speed;
     [SerializeField] RoomGenerator _creator;
     [SerializeField] Vector3 _startPos;
-    [SerializeField] Canvas _chooseCanvas;
+    [SerializeField] Canvas _chooseCanvas, _turnCanvas;
     GameObject obstacle;
 
     public bool canMove = true;
@@ -22,8 +22,9 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Turn")
         {
+            Time.timeScale = 0;
             canMove = false;
-            _creator.ChooseRoom();
+            _turnCanvas.enabled = true;
             Destroy(collision.gameObject);
         }
         else
@@ -36,17 +37,9 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Turn")
-        {
-            canMove = false;
-            _creator.ChooseRoom();
-        }
-        else
-        {
-            Time.timeScale = 0;
-            obstacle = collision.gameObject;
-            _chooseCanvas.enabled = true;
-        }
+        Time.timeScale = 0;
+        obstacle = collision.gameObject;
+        _chooseCanvas.enabled = true;
 
 
     }

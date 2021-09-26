@@ -9,6 +9,8 @@ public class RoomGenerator : MonoBehaviour
     [SerializeField] GameObject[] _obstacles;
     [SerializeField] GameObject _wallWithTurns;
     [SerializeField] GameObject _trigger;
+    [SerializeField] GameObject _enemy;
+    [SerializeField] GameObject _door;
     [SerializeField] float _roomOffset = 10.15f;
     public float timeToChange;
     GameObject currentRoom, nextRoom, lastRoom;
@@ -31,22 +33,6 @@ public class RoomGenerator : MonoBehaviour
 
     }
 
-    IEnumerator ChangeRooms(bool hasObstacle = true)
-    {
-        var deltaY = (nextRoom.transform.position - currentRoom.transform.position).magnitude / 100;
-        for (int i = 0; i < 100; i++)
-        {
-            nextRoom.transform.Translate(0, -deltaY, 0);
-            currentRoom.transform.Translate(0, -deltaY, 0);
-            yield return new WaitForSeconds(timeToChange / 100);
-        }
-
-        Destroy(currentRoom.gameObject);
-        currentRoom = nextRoom;
-
-        if (hasObstacle)
-            GenerateObstacles();
-    }
 
 
     public void GenerateRoom()
@@ -60,6 +46,7 @@ public class RoomGenerator : MonoBehaviour
         nextRoom.transform.position = new Vector3(0, _roomOffset, 0);
         StartCoroutine(ChangeRooms(!hasTurn));
     }
+
 
     GameObject CreateRoom(bool hasTurn = false)
     {
@@ -82,34 +69,53 @@ public class RoomGenerator : MonoBehaviour
         return room;
     }
 
+
     void GenerateObstacles()
     {
+        // Будет ли комната с врагами?
+        /*if (Random.Range(0, 2) == 1)
+            GenerateEnemy();*/
         Instantiate(_obstacles[Random.Range(0, _obstacles.Length)]);
     }
 
-    public void ChooseRoom()
+    /*void GenerateEnemy()
     {
+        // Создаём врага
+        Instantiate(_enemy);
+
+        // Создаём ворота
+        Instantiate(_door, new Vector3(0, 4.78f, 0), Quaternion.identity);
+        Instantiate(_door, new Vector3(0, -4.59f, 0), Quaternion.identity);
+    }*/
+
+
+    public void ChooseRoom(int room)
+    {
+        // 1 - поворот направо
+        // -1 - поворот налево
+
         nextRoom = CreateRoom();
         lastRoom = CreateRoom();
 
-        nextRoom.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -90.0f));
-        nextRoom.transform.position = new Vector3(7.64f, 0, 0);
+        nextRoom.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -90.0f * room));
+        nextRoom.transform.position = new Vector3(7.64f * room, 0, 0);
 
-        lastRoom.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -90.0f));
-        lastRoom.transform.position = new Vector3(-7.64f, 0, 0);
+        lastRoom.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90.0f * room));
+        lastRoom.transform.position = new Vector3(-7.64f * room, 0, 0);
 
-        StartCoroutine(RotateRooms());
+        Time.timeScale = 1;
+        StartCoroutine(RotateRooms(room));
     }
 
 
-    IEnumerator RotateRooms()
+    IEnumerator RotateRooms(int room)
     {
         var deltaZ = 0.9f;
         for (int i = 0; i <= 100; i++)
         {
-            currentRoom.transform.rotation = Quaternion.Euler(new Vector3(0, 0, i * deltaZ));
-            nextRoom.transform.RotateAround(currentRoom.transform.position, Vector3.forward, deltaZ);
-            lastRoom.transform.RotateAround(currentRoom.transform.position, Vector3.forward, deltaZ);
+            currentRoom.transform.rotation = Quaternion.Euler(new Vector3(0, 0, i * deltaZ * room));
+            nextRoom.transform.RotateAround(currentRoom.transform.position, Vector3.forward, deltaZ * room);
+            lastRoom.transform.RotateAround(currentRoom.transform.position, Vector3.forward, deltaZ * room);
             yield return new WaitForSeconds(timeToChange / 100);
         }
 
@@ -117,8 +123,8 @@ public class RoomGenerator : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             nextRoom.transform.Translate(0, -deltaY, 0);
-            currentRoom.transform.Translate(-deltaY, 0, 0);
-            lastRoom.transform.Translate(0, -deltaY, 0);
+            currentRoom.transform.Translate(-deltaY * room, 0, 0);
+            lastRoom.transform.Translate(0, deltaY, 0);
             yield return new WaitForSeconds(timeToChange / 100);
         }
         nextRoom.transform.position = Vector3.zero;
@@ -128,5 +134,23 @@ public class RoomGenerator : MonoBehaviour
         currentRoom = nextRoom;
 
         FindObjectOfType<Player>().canMove = true;
+    }
+
+
+    IEnumerator ChangeRooms(bool hasObstacle = true)
+    {
+        var deltaY = (nextRoom.transform.position - currentRoom.transform.position).magnitude / 100;
+        for (int i = 0; i < 100; i++)
+        {
+            nextRoom.transform.Translate(0, -deltaY, 0);
+            currentRoom.transform.Translate(0, -deltaY, 0);
+            yield return new WaitForSeconds(timeToChange / 100);
+        }
+
+        Destroy(currentRoom.gameObject);
+        currentRoom = nextRoom;
+
+        if (hasObstacle)
+            GenerateObstacles();
     }
 }
