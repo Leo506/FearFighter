@@ -293,8 +293,10 @@ MonoBehaviour:
   _obstacles:
   - {fileID: 2523190522199209816, guid: 8c8d4059de67526428426b7716f9b4ef, type: 3}
   - {fileID: 3791489324092854096, guid: 715f2d08de8eef94d87a8731dca469e3, type: 3}
+  _wallWithTurns: {fileID: 450681190745532544, guid: 8115e7f626225e2beb32cc29574cca85, type: 3}
+  _trigger: {fileID: 2243284354897775361, guid: b65567523bcfdab328550265427c40bd, type: 3}
   _roomOffset: 10.15
-  timeToChange: 3
+  timeToChange: 1
 --- !u!4 &245767116
 Transform:
   m_ObjectHideFlags: 0
@@ -717,6 +719,7 @@ MonoBehaviour:
   _creator: {fileID: 245767115}
   _startPos: {x: 0, y: -5.5, z: -1}
   _chooseCanvas: {fileID: 1369388428}
+  canMove: 1
 --- !u!50 &1974366136
 Rigidbody2D:
   serializedVersion: 4
