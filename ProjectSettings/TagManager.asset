@@ -4,7 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - Turn
+=======
+  - Obstacle
+  - Enemy
+>>>>>>> prototype-fight
   layers:
   - Default
   - TransparentFX
