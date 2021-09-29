@@ -28,7 +28,13 @@ public class PlayerInput : MonoBehaviour
 
         if (isMobile)
         {
-            // TODO добавить определение свайпа для сенсорных экранов
+            if (Input.touchCount > 0)
+            {
+                if (Input.GetTouch(0).phase == TouchPhase.Began)
+                    startPos = Input.GetTouch(0).position;
+                else if (Input.GetTouch(0).phase == TouchPhase.Canceled || Input.GetTouch(0).phase == TouchPhase.Ended)
+                    swipe = CheckSwip();
+            }
         }
         else
         {
@@ -53,28 +59,28 @@ public class PlayerInput : MonoBehaviour
 
         if (isMobile)
         {
-
+            swipeDelta = (Vector2)Input.GetTouch(0).position - startPos;
         }
         else
         {
             swipeDelta = (Vector2)Input.mousePosition - startPos;
+        }
 
-            if (swipeDelta.magnitude >= deadZone)
+        if (swipeDelta.magnitude >= deadZone)
+        {
+            if (Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y))
             {
-                if (Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y))
-                {
-                    if (swipeDelta.x > 0)
-                        swipe = Vector2.right;
-                    else
-                        swipe = Vector2.left;
-                }
+                if (swipeDelta.x > 0)
+                    swipe = Vector2.right;
                 else
-                {
-                    if (swipeDelta.y > 0)
+                        swipe = Vector2.left;
+            }
+            else
+            {
+                if (swipeDelta.y > 0)
                         swipe = Vector2.up;
-                    else
+                else
                         swipe = Vector2.down;
-                }
             }
         }
 

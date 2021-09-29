@@ -7,20 +7,22 @@ public class Player : MonoBehaviour
     [SerializeField] PlayerInput _input;
     Rigidbody2D rb2D;
     BoxCollider2D bx;
+    RoomGenerator generator;
 
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
         bx = GetComponent<BoxCollider2D>();
+        generator = FindObjectOfType<RoomGenerator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         var dir = _input.GetSwipe();
-        if (AttemptMove(dir))
-            rb2D.MovePosition(rb2D.position + dir);
+        if (AttemptMove(dir * generator.xOffset))
+            rb2D.MovePosition(rb2D.position + dir * generator.xOffset);
     }
 
     bool AttemptMove(Vector2 dir)
