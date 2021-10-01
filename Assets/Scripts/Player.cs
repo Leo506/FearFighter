@@ -20,9 +20,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var dir = _input.GetSwipe();
-        if (AttemptMove(dir * generator.xOffset))
-            rb2D.MovePosition(rb2D.position + dir * generator.xOffset);
+        var dir = _input.GetSwipe() * generator.xOffset;
+        if (dir != Vector2.zero)
+        {
+            if (AttemptMove(dir))
+                rb2D.MovePosition(rb2D.position + dir);
+        }
     }
 
     bool AttemptMove(Vector2 dir)

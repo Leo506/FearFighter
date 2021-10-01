@@ -25,6 +25,8 @@ public class RoomGenerator : MonoBehaviour
 
     List<Cell> cells = new List<Cell>();
 
+    Cell startCell;
+
     public void GenerateRoom()
     {
         if (currentRoom != null)
@@ -32,7 +34,9 @@ public class RoomGenerator : MonoBehaviour
         cells.Clear();
 
         currentRoom = new GameObject("Room");
+        CreateEnter();
         GenerateMaze();
+        CreateExit();
         for (int x = -1; x <= 5; x++)
         {
             for (int y = -1; y <= 13; y++)
@@ -45,6 +49,7 @@ public class RoomGenerator : MonoBehaviour
                 }
             }
         }
+        
     }
 
     void GenerateMaze()
@@ -53,14 +58,45 @@ public class RoomGenerator : MonoBehaviour
         // Доступные y: 0...12
         // TODO сделать настраиваемыми диапазоны x и y
 
+        for (int x = startCell.x; x <= 4; x++)
+        {
+            int y = startCell.y;
+            CreateCell(RandomDir(x, y));
+        }
+
+        for (int x = 0; x < startCell.x; x++)
+        {
+            int y = startCell.y;
+            CreateCell(RandomDir(x, y));
+        }
+
         for (int x = 0; x < 4; x++)
         {
-            for (int y = 0; y < 12; y++)
+            for (int y = 1; y < 12; y++)
             {
-                Cell cell = RandomDir(x, y);
-                CreateCell(cell);
-                cells.Add(cell);
+                CreateCell(RandomDir(x, y));
             }
+        }
+    }
+
+    void CreateEnter()
+    {
+        int x = Random.Range(0, 5);
+        int y = -1;
+        Cell cell = new Cell(x, y);
+        CreateCell(cell);
+
+        startCell = new Cell(cell.x, cell.y + 1);
+        CreateCell(startCell);
+    }
+
+    void CreateExit()
+    {
+        var lastCell = cells[cells.Count - 1];
+
+        for (int i = 1; i <= 13 - lastCell.y; i++)
+        {
+            CreateCell(new Cell(lastCell.x, lastCell.y + i));
         }
     }
 
@@ -73,19 +109,15 @@ public class RoomGenerator : MonoBehaviour
     /// <param name="yPos">Позиция y текущей клетки (условный)</param>
     Cell RandomDir(int xPos, int yPos)
     {
-        Vector2 dir = CreateRandomDir();
-        int counter = 0;
+        Vector2[] dirs = CreateRandomDir();
 
-        while (!ValidDir(xPos, yPos, dir) && counter < 10)
+        for (int i = 0; i < 4; i++)
         {
-            dir = CreateRandomDir();
-            counter++;
+            if (ValidDir(xPos, yPos, dirs[i]))
+                return new Cell(xPos + (int)dirs[i].x, yPos + (int)dirs[i].y);
         }
 
-
-
-
-        return new Cell(xPos + (int)dir.x, yPos + (int)dir.y);
+        return new Cell(-1, -1);
 
     }
 
@@ -94,36 +126,19 @@ public class RoomGenerator : MonoBehaviour
     /// Создание случайного направления (в Vector2)
     /// </summary>
     /// <returns>Возвращает направление в виде Vector2</returns>
-    Vector2 CreateRandomDir()
+    Vector2[] CreateRandomDir()
     {
-        Vector2 dir;
+        Vector2[] dirs = { Vector2.up, Vector2.down, Vector2.right, Vector2.left };
 
-        var rnd = Random.Range(0, 4);
-
-        switch (rnd)
+        for (int i = 0; i < 4; i++)
         {
-            case 0:
-                dir = Vector2.right;
-                break;
-
-            case 1:
-                dir = Vector2.left;
-                break;
-
-            case 2:
-                dir = Vector2.down;
-                break;
-
-            case 3:
-                dir = Vector2.up;
-                break;
-
-            default:
-                dir = Vector2.zero;
-                break;
+            int j = Random.Range(0, 4);
+            var tmp = dirs[j];
+            dirs[j] = dirs[i];
+            dirs[i] = tmp;
         }
 
-        return dir;
+        return dirs;
     }
 
 
@@ -138,10 +153,13 @@ public class RoomGenerator : MonoBehaviour
     {
         int newXPos = xPos + (int)dir.x;
         int newYPos = yPos + (int)dir.y;
-        if ((newXPos >= 0) && (newXPos <= 4) && (newYPos >= 0) && (newYPos <= 12))
+        if (((newXPos >= 0) && (newXPos <= 4)) && ((newYPos >= 0) && (newYPos <= 12)))
         {
             if (!cells.Contains(new Cell(newXPos, newYPos)))
+            {
                 return true;
+            }
+                
         }
 
 
@@ -152,9 +170,12 @@ public class RoomGenerator : MonoBehaviour
 
     void CreateCell(Cell cell)
     {
-        Debug.Log("Cell x: " + cell.x + " Cell y: " + cell.y);
-        var obj = Instantiate(_floorPrefab, currentRoom.transform);
-        obj.transform.position = new Vector2((cell.x-2) * xOffset, (cell.y-6) * yOffset);
-        Debug.Log(new Vector2((cell.x - 2) * xOffset, (cell.y - 6) * yOffset));
+        if (!cell.Equals(new Cell(-1, -1)))
+        {
+            var obj = Instantiate(_floorPrefab, currentRoom.transform);
+            obj.transform.position = new Vector2((cell.x-2) * xOffset, (cell.y-6) * yOffset);
+            cells.Add(cell);
+        }
+        
     }
 }

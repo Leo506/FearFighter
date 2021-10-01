@@ -15,12 +15,7 @@ public class PlayerInput : MonoBehaviour
         isMobile = Application.isMobilePlatform;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-
-    }
+    
 
     public Vector2 GetSwipe()
     {
@@ -47,7 +42,6 @@ public class PlayerInput : MonoBehaviour
                 swipe = CheckSwip();
             }
         }
-        Debug.Log(swipe);
         return swipe;
     }
 
