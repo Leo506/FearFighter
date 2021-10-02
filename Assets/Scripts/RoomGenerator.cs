@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 struct Cell
 {
@@ -11,6 +12,11 @@ struct Cell
     {
         this.x = x;
         this.y = y;
+    }
+
+    public override string ToString()
+    {
+        return $"X = {this.x} Y = {this.y}";
     }
 }
 
@@ -42,6 +48,7 @@ public class RoomGenerator : MonoBehaviour
             for (int y = -1; y <= 13; y++)
             {
                 Cell cell = new Cell(x, y);
+                Debug.Log($"x: {cell.x} y = {cell.y} contains? {cells.Contains(cell)}");
                 if (!cells.Contains(cell))
                 {
                     var wall = Instantiate(_wallPrefab, currentRoom.transform);
@@ -60,21 +67,21 @@ public class RoomGenerator : MonoBehaviour
 
         for (int x = startCell.x; x <= 4; x++)
         {
-            int y = startCell.y;
-            CreateCell(RandomDir(x, y));
+            int y = 0;
+            Cell next = RandomDir(x, y);
+            if (!next.Equals(new Cell(-1, -1)))
+                CreateCell(new Cell(x, y), next);
         }
 
-        for (int x = 0; x < startCell.x; x++)
+        for (int x = 0; x <= 4; x+=2)
         {
-            int y = startCell.y;
-            CreateCell(RandomDir(x, y));
-        }
-
-        for (int x = 0; x < 4; x++)
-        {
-            for (int y = 1; y < 12; y++)
+            for (int y = 2; y <= 12; y+=2)
             {
-                CreateCell(RandomDir(x, y));
+                Cell next = RandomDir(x, y);
+                if (!next.Equals(new Cell(-1, -1)))
+                    CreateCell(new Cell(x, y), next);
+                else
+                    CreateCell(new Cell(x, y));
             }
         }
     }
@@ -82,22 +89,20 @@ public class RoomGenerator : MonoBehaviour
     void CreateEnter()
     {
         int x = Random.Range(0, 5);
-        int y = -1;
-        Cell cell = new Cell(x, y);
-        CreateCell(cell);
+        int y = 0;
 
-        startCell = new Cell(cell.x, cell.y + 1);
-        CreateCell(startCell);
+        CreateCell(new Cell(x, y - 1));
+
+        startCell = new Cell(x, 0);
+        Debug.Log($"Start cell: x={startCell.x} y={startCell.y}");
     }
 
     void CreateExit()
     {
-        var lastCell = cells[cells.Count - 1];
+        var variant = from c in cells where c.y == 12 select c;
+        Cell lastCell = variant.ElementAt(Random.Range(0, variant.Count()));
 
-        for (int i = 1; i <= 13 - lastCell.y; i++)
-        {
-            CreateCell(new Cell(lastCell.x, lastCell.y + i));
-        }
+        CreateCell(new Cell(lastCell.x, lastCell.y + 1));
     }
 
 
@@ -111,7 +116,7 @@ public class RoomGenerator : MonoBehaviour
     {
         Vector2[] dirs = CreateRandomDir();
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < dirs.Length; i++)
         {
             if (ValidDir(xPos, yPos, dirs[i]))
                 return new Cell(xPos + (int)dirs[i].x, yPos + (int)dirs[i].y);
@@ -128,11 +133,11 @@ public class RoomGenerator : MonoBehaviour
     /// <returns>Возвращает направление в виде Vector2</returns>
     Vector2[] CreateRandomDir()
     {
-        Vector2[] dirs = { Vector2.up, Vector2.down, Vector2.right, Vector2.left };
+        Vector2[] dirs = { Vector2.up * 2, Vector2.right * 2};
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 2; i++)
         {
-            int j = Random.Range(0, 4);
+            int j = Random.Range(0, 2);
             var tmp = dirs[j];
             dirs[j] = dirs[i];
             dirs[i] = tmp;
@@ -155,10 +160,8 @@ public class RoomGenerator : MonoBehaviour
         int newYPos = yPos + (int)dir.y;
         if (((newXPos >= 0) && (newXPos <= 4)) && ((newYPos >= 0) && (newYPos <= 12)))
         {
-            if (!cells.Contains(new Cell(newXPos, newYPos)))
-            {
-                return true;
-            }
+            
+            return true;
                 
         }
 
@@ -168,14 +171,55 @@ public class RoomGenerator : MonoBehaviour
     }
 
 
-    void CreateCell(Cell cell)
+    void CreateCell(Cell current, Cell next)
     {
-        if (!cell.Equals(new Cell(-1, -1)))
+
+        if (current.x != next.x)
         {
-            var obj = Instantiate(_floorPrefab, currentRoom.transform);
-            obj.transform.position = new Vector2((cell.x-2) * xOffset, (cell.y-6) * yOffset);
-            cells.Add(cell);
+            if (current.x < next.x)
+            {
+                for (int i = current.x; i < next.x; i++)
+                {
+                    var obj = Instantiate(_floorPrefab, currentRoom.transform);
+                    obj.transform.position = new Vector2((i - 2) * xOffset, (current.y - 6) * yOffset);
+                    cells.Add(new Cell(i, current.y));
+                }
+            } else
+            {
+                for (int i = current.x; i > next.x; i--)
+                {
+                    var obj = Instantiate(_floorPrefab, currentRoom.transform);
+                    obj.transform.position = new Vector2((i - 2) * xOffset, (current.y - 6) * yOffset);
+                    cells.Add(new Cell(i, current.y));
+                }
+            }
+        } else
+        {
+            if (current.y < next.y)
+            {
+                for (int i = current.y; i < next.y; i++)
+                {
+                    var obj = Instantiate(_floorPrefab, currentRoom.transform);
+                    obj.transform.position = new Vector2((current.x - 2) * xOffset, (i - 6) * yOffset);
+                    cells.Add(new Cell(current.x, i));
+                }
+            } else
+            {
+                for (int i = current.y; i > next.y; i--)
+                {
+                    var obj = Instantiate(_floorPrefab, currentRoom.transform);
+                    obj.transform.position = new Vector2((current.x - 2) * xOffset, (i - 6) * yOffset);
+                    cells.Add(new Cell(current.x, i));
+                }
+            }
         }
         
+    }
+
+    void CreateCell(Cell cell)
+    {
+        var obj = Instantiate(_floorPrefab, currentRoom.transform);
+        obj.transform.position = new Vector2((cell.x - 2) * xOffset, (cell.y - 6) * yOffset);
+        cells.Add(cell);
     }
 }
