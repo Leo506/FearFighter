@@ -24,6 +24,8 @@ struct Cell
 public class RoomGenerator : MonoBehaviour
 {
     [SerializeField] GameObject _floorPrefab, _wallPrefab;
+    [SerializeField] GameObject[] _items;
+    [SerializeField] GameObject _player;
     public float xOffset;
     public float yOffset;
 
@@ -43,19 +45,9 @@ public class RoomGenerator : MonoBehaviour
         CreateEnter();
         GenerateMaze();
         CreateExit();
-        for (int x = -1; x <= 5; x++)
-        {
-            for (int y = -1; y <= 13; y++)
-            {
-                Cell cell = new Cell(x, y);
-                Debug.Log($"x: {cell.x} y = {cell.y} contains? {cells.Contains(cell)}");
-                if (!cells.Contains(cell))
-                {
-                    var wall = Instantiate(_wallPrefab, currentRoom.transform);
-                    wall.transform.position = new Vector2((x - 2) * xOffset, (y - 6) * yOffset);
-                }
-            }
-        }
+        GenerateWalls();
+        CreateItems();
+        CreatePlayer();
         
     }
 
@@ -84,6 +76,41 @@ public class RoomGenerator : MonoBehaviour
                     CreateCell(new Cell(x, y));
             }
         }
+    }
+
+    void GenerateWalls()
+    {
+        for (int x = -1; x <= 5; x++)
+        {
+            for (int y = -1; y <= 13; y++)
+            {
+                Cell cell = new Cell(x, y);
+                Debug.Log($"x: {cell.x} y = {cell.y} contains? {cells.Contains(cell)}");
+                if (!cells.Contains(cell))
+                {
+                    var wall = Instantiate(_wallPrefab, currentRoom.transform);
+                    wall.transform.position = new Vector2((x - 2) * xOffset, (y - 6) * yOffset);
+                }
+            }
+        }
+    }
+
+    void CreateItems()
+    {
+        int countOfItems = Random.Range(1, 5);
+
+        for (int i = 0; i < countOfItems; i++)
+        {
+            GameObject itemPrefab = _items[Random.Range(1, _items.Length)];
+            Cell itemCell = cells[Random.Range(0, cells.Count)];
+            var item = Instantiate(itemPrefab, currentRoom.transform);
+            item.transform.position = new Vector2((itemCell.x - 2) * xOffset, (itemCell.y - 6) * yOffset);
+        }
+    }
+
+    void CreatePlayer()
+    {
+        _player.transform.position = new Vector2((startCell.x - 2) * xOffset, (startCell.y - 6) * yOffset);
     }
 
     void CreateEnter()

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] PlayerInput _input;
+    [SerializeField] Canvas _chooseCanvas;
+    GameObject item;
     Rigidbody2D rb2D;
     BoxCollider2D bx;
     RoomGenerator generator;
@@ -36,8 +38,23 @@ public class Player : MonoBehaviour
         bx.enabled = true;
 
         if (hit.transform != null)
+        {
+            if (hit.collider.gameObject.tag == "Item")
+            {
+                Time.timeScale = 0;
+                _chooseCanvas.enabled = true;
+                item = hit.collider.gameObject;
+            }
             return false;
+        }
 
         return true;
+    }
+
+    public void ContinueGame()
+    {
+        Time.timeScale = 1;
+        _chooseCanvas.enabled = false;
+        Destroy(item);
     }
 }
