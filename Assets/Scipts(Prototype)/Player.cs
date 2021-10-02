@@ -80,11 +80,14 @@ public class Player : MonoBehaviour
     {
         Vector2 newPos = rb2D.position + dir;
         bx.enabled = false;
-        RaycastHit2D hit = Physics2D.Linecast(rb2D.position, newPos);
+        //Добавил параметр ВАЖНО!!!!
+        RaycastHit2D hit = Physics2D.Linecast(rb2D.position, newPos, LayerMask.GetMask("Walls", "Enemies"));
+        //Добавил параметр ВАЖНО!!!!
         bx.enabled = true;
 
         if (hit.transform != null)
             return false;
+            
 
         return true;
     }
