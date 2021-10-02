@@ -4,93 +4,122 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float _speed;
-    [SerializeField] RoomGenerator _creator;
-    [SerializeField] Vector3 _startPos;
-    [SerializeField] Canvas _chooseCanvas;
-    [SerializeField] Joystick _joystick;
-    [SerializeField] Transform firePoint;
-    [SerializeField] float impulseBullet;
+    [SerializeField] PlayerInput _input;
+    Rigidbody2D rb2D;
+    BoxCollider2D bx;
+    RoomGenerator generator;
+
+//Для стрельбы
     public GameObject bulletPrefab;
-    public GameObject enemy;
-    private Rigidbody2D rb;
-    GameObject obstacle;
+    public CircleCollider2D fireArea;
+    public Transform firePoint;
+    private GameObject[] arrayAllEnemies;
+    private GameObject[] arrayFreeEnemies;
+    private bool roomIsGenerated;
+    [SerializeField] GameObject _nearestEnemy;
+    private float directionToEnemy;
+    public float force;
+    [SerializeField] float _timeDelay;
+    private bool timeToShoot;
+    private bool enemyIs;
+    private RaycastHit2D checkFree;
+//Для стрельбы
 
-    bool recharge = false;
-    bool canMove = true;
-   
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        impulseBullet = 20f;
+        //Для стрельбы
+        roomIsGenerated = false;
+        timeToShoot = true;
+        enemyIs = false;
+        //Для стрельбы
+
+        rb2D = GetComponent<Rigidbody2D>();
+        bx = GetComponent<BoxCollider2D>();
+        generator = FindObjectOfType<RoomGenerator>();
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        rb.velocity = new Vector3(_speed * _joystick.Horizontal, _speed * _joystick.Vertical, 0);
-
-        // transform.LookAt(enemy.transform.position);
-        var direction = enemy.transform.position - this.transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
-        rb.rotation = angle;
-
-        if(!recharge)
+        var dir = _input.GetSwipe();
+        if (AttemptMove(dir * generator.xOffset))
+            rb2D.MovePosition(rb2D.position + dir * generator.xOffset);
+        
+        //Для стрельбы Определение ближайшего врага в зоне видимости
+        if (roomIsGenerated)
         {
-            Shoot(angle, enemy.transform.position);
+            foreach (GameObject enemy in arrayAllEnemies)
+            {
+                checkFree = Physics2D.Raycast(firePoint.transform.position, enemy.transform.position - transform.position, Vector2.Distance(transform.position, enemy.transform.position), LayerMask.GetMask("Walls"));
+                if (fireArea.IsTouching(enemy.GetComponent<Collider2D>()) && checkFree.collider == null)
+                {
+                    enemyIs = true;
+                    if (Vector3.Distance(transform.position, enemy.transform.position) < Vector3.Distance(transform.position, _nearestEnemy.transform.position))
+                    {
+                        _nearestEnemy = enemy;
+                    }
+                    else
+                    {
+                        _nearestEnemy = enemy;
+                    }
+                } else
+                {
+                    enemyIs = false;
+                }
+            }
         }
-       // if (canMove)
-       //     this.transform.Translate(0, _speed * Time.deltaTime, 0);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        _creator.GenerateRoom();
-        StartCoroutine(ResetPos());
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Obstacle")
+        if (enemyIs)
         {
-            Time.timeScale = 0;
-            obstacle = collision.gameObject;
-            _chooseCanvas.enabled = true;
+            Shoot(FindAngle(gameObject, _nearestEnemy));
         }
+        //Для стрельбы Определение ближайшего врага в зоне видимости
     }
 
-    public void ContinueGame()
+    bool AttemptMove(Vector2 dir)
     {
-        Destroy(obstacle.gameObject);
-        Time.timeScale = 1;
-        _chooseCanvas.enabled = false;
+        Vector2 newPos = rb2D.position + dir;
+        bx.enabled = false;
+        RaycastHit2D hit = Physics2D.Linecast(rb2D.position, newPos);
+        bx.enabled = true;
+
+        if (hit.transform != null)
+            return false;
+
+        return true;
     }
 
-    public void Shoot(float angle, Vector3 pos)
+    //Для стрельбы Заполняем массив всеми врагами в комнате
+    public void SetAllEnemiesInArray()
     {
-        GameObject bullet = Instantiate(bulletPrefab, new Vector3(firePoint.transform.position.x, firePoint.transform.position.y, 0), firePoint.rotation);
-        bullet.transform.rotation.Set(0,0,angle,0);
-        Rigidbody2D rbBul = bullet.GetComponent<Rigidbody2D>();
-        rbBul.AddForce(firePoint.up * impulseBullet, ForceMode2D.Impulse);
-
-        StartCoroutine(TimerRecharge(0.5f));
+        arrayAllEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        roomIsGenerated = true;
     }
+    //Заполняем массив всеми врагами в комнате
 
-    IEnumerator ResetPos()
+    //Стрельба
+    float FindAngle(GameObject go1, GameObject go2)
     {
-        canMove = false;
-        var deltaY = (this.transform.position - _startPos).magnitude / 100;
-        for (int i = 0; i < 100; i++)
+        Vector3 difference = go1.transform.position - go2.transform.position;
+        directionToEnemy = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+        return directionToEnemy;
+    }
+    private void Shoot(float angle)
+    {
+        if (timeToShoot)
         {
-            this.transform.Translate(0, -deltaY, 0);
-            yield return new WaitForSeconds(_creator.timeToChange / 100);
+            StartCoroutine(shootDelay(angle, _timeDelay));
+            timeToShoot = false;
         }
-        canMove = true;
     }
-    IEnumerator TimerRecharge(float secRecharge)
-    {
-        recharge = true;
 
-        yield return new WaitForSeconds(secRecharge);
-        recharge = false;
+    IEnumerator shootDelay(float angle, float timeDelay)
+    {
+        yield return new WaitForSeconds(timeDelay);
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.Euler(0f, 0f, angle-90));
+        firePoint.transform.rotation = Quaternion.Euler(0f, 0f, angle - 270);
+        bullet.GetComponent<Rigidbody2D>().AddForce(firePoint.up * force, ForceMode2D.Impulse);
+        timeToShoot = true;
     }
+    //Для стрельбы Стрельба
 }
