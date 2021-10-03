@@ -503,11 +503,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _floorPrefab: {fileID: 2120927911759753689, guid: 8eceb02da2aa70771b3d9b18976c68cc, type: 3}
-  _wallPrefab: {fileID: 5947855984013810524, guid: a8d82002f4cefc543b1314d084a35a95, type: 3}
+  _wallPrefab: {fileID: 3420482502200883921, guid: a8d82002f4cefc543b1314d084a35a95, type: 3}
   _items:
   - {fileID: 1552750095617909899, guid: 0c2878b36ad164f4d893ed8c21b9cd0e, type: 3}
   - {fileID: 2862310703319159270, guid: 47615621e2425184da15cb03760029fe, type: 3}
-  _player: {fileID: 1858361570}
+  _player: {fileID: 1858361571}
   xOffset: 0.64
   yOffset: 0.64
 --- !u!4 &985515394
@@ -947,7 +947,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _input: {fileID: 667346866}
-  _chooseCanvas: {fileID: 1097087032}
+  _chooseCanvas: {fileID: 0}
+  bulletPrefab: {fileID: 0}
+  fireArea: {fileID: 0}
+  firePoint: {fileID: 0}
+  _nearestEnemy: {fileID: 0}
+  force: 0
+  _timeDelay: 0
 --- !u!50 &1858361572
 Rigidbody2D:
   serializedVersion: 4

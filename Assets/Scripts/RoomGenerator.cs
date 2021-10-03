@@ -25,7 +25,7 @@ public class RoomGenerator : MonoBehaviour
 {
     [SerializeField] GameObject _floorPrefab, _wallPrefab;
     [SerializeField] GameObject[] _items;
-    [SerializeField] GameObject _player;
+    [SerializeField] Player _player;
     public float xOffset;
     public float yOffset;
 
@@ -48,7 +48,8 @@ public class RoomGenerator : MonoBehaviour
         GenerateWalls();
         CreateItems();
         CreatePlayer();
-        
+        _player.SetAllEnemiesInArray();
+
     }
 
     void GenerateMaze()
@@ -110,7 +111,7 @@ public class RoomGenerator : MonoBehaviour
 
     void CreatePlayer()
     {
-        _player.transform.position = new Vector2((startCell.x - 2) * xOffset, (startCell.y - 6) * yOffset);
+        _player.gameObject.transform.position = new Vector2((startCell.x - 2) * xOffset, (startCell.y - 6) * yOffset);
     }
 
     void CreateEnter()
