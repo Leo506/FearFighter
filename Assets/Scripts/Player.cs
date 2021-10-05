@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     private bool enemyIs;
     private RaycastHit2D checkFree;
 
+    public int countOfRoom;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,20 +51,36 @@ public class Player : MonoBehaviour
 
         if (roomIsGenerated)
         {
+            Dictionary<float, GameObject> distances = new Dictionary<float, GameObject>();
+            foreach (var item in arrayAllEnemies)
+            {
+                distances.Add((item.transform.position - this.transform.position).magnitude, item);
+            }
+
+            List<float> keys = new List<float>();
+            foreach (var item in distances.Keys)
+            {
+                keys.Add(item);
+            }
+            keys.Sort();
+
+
             foreach (GameObject enemy in arrayAllEnemies)
             {
                 checkFree = Physics2D.Raycast(firePoint.transform.position, enemy.transform.position - transform.position, Vector2.Distance(transform.position, enemy.transform.position), LayerMask.GetMask("Walls"));
                 if (fireArea.IsTouching(enemy.GetComponent<Collider2D>()) && checkFree.collider == null)
                 {
                     enemyIs = true;
-                    if (Vector3.Distance(transform.position, enemy.transform.position) < Vector3.Distance(transform.position, _nearestEnemy.transform.position))
+                    /*if (Vector3.Distance(transform.position, enemy.transform.position) < Vector3.Distance(transform.position, _nearestEnemy.transform.position))
                     {
                         _nearestEnemy = enemy;
                     }
                     else
                     {
                         _nearestEnemy = enemy;
-                    }
+                    }*/
+
+                    _nearestEnemy = distances[keys[0]];
                 }
                 else
                 {
@@ -76,11 +94,12 @@ public class Player : MonoBehaviour
         }
     }
 
+
     bool AttemptMove(Vector2 dir)
     {
         Vector2 newPos = rb2D.position + dir;
         bx.enabled = false;
-        RaycastHit2D hit = Physics2D.Linecast(rb2D.position, newPos, LayerMask.GetMask("Walls", "Enemies"));
+        RaycastHit2D hit = Physics2D.Linecast(rb2D.position, newPos, LayerMask.GetMask("Walls", "Enemies", "Items"));
         bx.enabled = true;
 
         if (hit.transform != null)
@@ -90,6 +109,11 @@ public class Player : MonoBehaviour
                 Time.timeScale = 0;
                 _chooseCanvas.enabled = true;
                 item = hit.collider.gameObject;
+            }
+            else if (hit.collider.gameObject.tag == "Exit")
+            {
+                generator.GenerateRoom(countOfRoom);
+                countOfRoom++;
             }
             return false;
         }
@@ -109,6 +133,7 @@ public class Player : MonoBehaviour
     {
         arrayAllEnemies = GameObject.FindGameObjectsWithTag("Enemy");
         roomIsGenerated = true;
+        Debug.Log("qwerty");
     }
 
     //Стрельба

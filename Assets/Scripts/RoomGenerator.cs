@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Pathfinding;
 
 struct Cell
 {
@@ -23,7 +24,7 @@ struct Cell
 
 public class RoomGenerator : MonoBehaviour
 {
-    [SerializeField] GameObject _floorPrefab, _wallPrefab;
+    [SerializeField] GameObject _floorPrefab, _wallPrefab, _exitPrefab, _enemyPrefab;
     [SerializeField] GameObject[] _items;
     [SerializeField] Player _player;
     public float xOffset;
@@ -35,20 +36,50 @@ public class RoomGenerator : MonoBehaviour
 
     Cell startCell;
 
-    public void GenerateRoom()
+    void Start()
+    {
+        GenerateRoom(-1);
+    }
+
+    public void GenerateRoom(int indexOfRoom)
     {
         if (currentRoom != null)
             Destroy(currentRoom.gameObject);
         cells.Clear();
 
         currentRoom = new GameObject("Room");
-        CreateEnter();
-        GenerateMaze();
-        CreateExit();
-        GenerateWalls();
-        CreateItems();
+
+        if (indexOfRoom == 2)
+            GenerateBossArena();
+        else
+        {
+            CreateEnter();
+            GenerateMaze();
+            CreateExit();
+            GenerateWalls();
+            CreateItems();
+
+        }
+
         CreatePlayer();
-        _player.SetAllEnemiesInArray();
+
+
+    }
+
+    void GenerateBossArena()
+    {
+        for (int i = 0; i <= 4; i++)
+        {
+            for (int j = 0; j <= 12; j++)
+            {
+                CreateCell(new Cell(i, j));
+            }
+        }
+
+        CreateEnter();
+        GenerateWalls();
+        var enemy = Instantiate(_enemyPrefab);
+        enemy.GetComponent<AIDestinationSetter>().target = _player.transform;
 
     }
 
@@ -112,6 +143,7 @@ public class RoomGenerator : MonoBehaviour
     void CreatePlayer()
     {
         _player.gameObject.transform.position = new Vector2((startCell.x - 2) * xOffset, (startCell.y - 6) * yOffset);
+        _player.SetAllEnemiesInArray();
     }
 
     void CreateEnter()
@@ -127,10 +159,54 @@ public class RoomGenerator : MonoBehaviour
 
     void CreateExit()
     {
-        var variant = from c in cells where c.y == 12 select c;
-        Cell lastCell = variant.ElementAt(Random.Range(0, variant.Count()));
+        int countOfExit = Random.Range(1, 4);
+        List<Cell> cellToCreate = new List<Cell>();
+        var aheadExits = from c in cells where c.y == 12 select c;
+        var rightExists = from c in cells where c.x == 0 select c;
+        var leftExits = from c in cells where c.x == 4 select c;
 
-        CreateCell(new Cell(lastCell.x, lastCell.y + 1));
+        Cell cellToAdd = new Cell(-1, -1);
+        switch (countOfExit)
+        {
+            case 1:
+                cellToAdd = aheadExits.ElementAt(Random.Range(0, aheadExits.Count()));
+                cellToAdd.y += 1;
+                cellToCreate.Add(cellToAdd);
+                break;
+
+            case 2:
+                cellToAdd = rightExists.ElementAt(Random.Range(0, rightExists.Count()));
+                cellToAdd.x -= 1;
+                cellToCreate.Add(cellToAdd);
+
+                cellToAdd = leftExits.ElementAt(Random.Range(0, leftExits.Count()));
+                cellToAdd.x += 1;
+                cellToCreate.Add(cellToAdd);
+
+                break;
+
+            case 3:
+                cellToAdd = aheadExits.ElementAt(Random.Range(0, aheadExits.Count()));
+                cellToAdd.y += 1;
+                cellToCreate.Add(cellToAdd);
+
+                cellToAdd = rightExists.ElementAt(Random.Range(0, rightExists.Count()));
+                cellToAdd.x -= 1;
+                cellToCreate.Add(cellToAdd);
+
+                cellToAdd = leftExits.ElementAt(Random.Range(0, leftExits.Count()));
+                cellToAdd.x += 1;
+                cellToCreate.Add(cellToAdd);
+                break;
+
+            default:
+                break;
+        }
+
+        foreach (var item in cellToCreate)
+        {
+            CreateCell(_exitPrefab, item);
+        }
     }
 
 
@@ -247,6 +323,13 @@ public class RoomGenerator : MonoBehaviour
     void CreateCell(Cell cell)
     {
         var obj = Instantiate(_floorPrefab, currentRoom.transform);
+        obj.transform.position = new Vector2((cell.x - 2) * xOffset, (cell.y - 6) * yOffset);
+        cells.Add(cell);
+    }
+
+    void CreateCell(GameObject prefab, Cell cell)
+    {
+        var obj = Instantiate(prefab, currentRoom.transform);
         obj.transform.position = new Vector2((cell.x - 2) * xOffset, (cell.y - 6) * yOffset);
         cells.Add(cell);
     }
