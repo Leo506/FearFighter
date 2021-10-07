@@ -6,10 +6,12 @@ public class Player : MonoBehaviour
 {
     [SerializeField] PlayerInput _input;
     [SerializeField] Canvas _chooseCanvas;
+    [SerializeField] UnityEngine.UI.Slider _braveSlider;
     GameObject item;
     Rigidbody2D rb2D;
     BoxCollider2D bx;
     RoomGenerator generator;
+    public float brave = 100;
 
     public GameObject bulletPrefab;
     public CircleCollider2D fireArea;
@@ -37,6 +39,9 @@ public class Player : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         bx = GetComponent<BoxCollider2D>();
         generator = FindObjectOfType<RoomGenerator>();
+
+        _braveSlider.maxValue = brave;
+        _braveSlider.value = _braveSlider.maxValue;
     }
 
     // Update is called once per frame
@@ -51,47 +56,49 @@ public class Player : MonoBehaviour
 
         if (roomIsGenerated)
         {
-            Dictionary<float, GameObject> distances = new Dictionary<float, GameObject>();
-            foreach (var item in arrayAllEnemies)
+            _nearestEnemy = CloseToEnemy(arrayAllEnemies);
+
+            if (_nearestEnemy != null)
             {
-                distances.Add((item.transform.position - this.transform.position).magnitude, item);
+                checkFree = Physics2D.Raycast(firePoint.transform.position, _nearestEnemy.transform.position - transform.position, Vector2.Distance(transform.position, _nearestEnemy.transform.position), LayerMask.GetMask("Walls"));
+                enemyIs = fireArea.IsTouching(_nearestEnemy.GetComponent<Collider2D>()) && checkFree.collider == null;
+            } else
+            {
+                enemyIs = false;
+                SetAllEnemiesInArray();
             }
 
-            List<float> keys = new List<float>();
-            foreach (var item in distances.Keys)
-            {
-                keys.Add(item);
-            }
-            keys.Sort();
-
-
-            foreach (GameObject enemy in arrayAllEnemies)
-            {
-                checkFree = Physics2D.Raycast(firePoint.transform.position, enemy.transform.position - transform.position, Vector2.Distance(transform.position, enemy.transform.position), LayerMask.GetMask("Walls"));
-                if (fireArea.IsTouching(enemy.GetComponent<Collider2D>()) && checkFree.collider == null)
-                {
-                    enemyIs = true;
-                    /*if (Vector3.Distance(transform.position, enemy.transform.position) < Vector3.Distance(transform.position, _nearestEnemy.transform.position))
-                    {
-                        _nearestEnemy = enemy;
-                    }
-                    else
-                    {
-                        _nearestEnemy = enemy;
-                    }*/
-
-                    _nearestEnemy = distances[keys[0]];
-                }
-                else
-                {
-                    enemyIs = false;
-                }
-            }
+            
         }
+
         if (enemyIs)
         {
             Shoot(FindAngle(gameObject, _nearestEnemy));
         }
+    }
+
+    GameObject CloseToEnemy(GameObject[] enemies)
+    {
+        try
+        {
+            GameObject near = enemies[0];
+            float dist = Vector2.Distance(enemies[0].transform.position, transform.position);
+
+            for (int i = 1; i < enemies.Length; i++)
+            {
+                var tmp = Vector2.Distance(enemies[i].transform.position, transform.position);
+                if (tmp < dist)
+                {
+                    near = enemies[i];
+                    dist = tmp;
+                }
+            }
+            return near;
+        } catch
+        {
+            return null;
+        }
+        
     }
 
 
@@ -128,6 +135,13 @@ public class Player : MonoBehaviour
         Destroy(item);
     }
 
+    public void GetDamage(float value)
+    {
+        brave -= value;
+        _braveSlider.value = brave;
+        Debug.Log("Получен урон. Храбрости: " + brave);
+    }
+
     //Для стрельбы Заполняем массив всеми врагами в комнате
     public void SetAllEnemiesInArray()
     {
@@ -139,9 +153,14 @@ public class Player : MonoBehaviour
     //Стрельба
     float FindAngle(GameObject go1, GameObject go2)
     {
-        Vector3 difference = go1.transform.position - go2.transform.position;
-        directionToEnemy = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-        return directionToEnemy;
+        if (go1 != null && go2 != null)
+        {
+            Vector3 difference = go1.transform.position - go2.transform.position;
+            directionToEnemy = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+            return directionToEnemy;
+        }
+        return 0;
+        
     }
     private void Shoot(float angle)
     {

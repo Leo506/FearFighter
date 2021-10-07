@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2445127365915851491}
   - component: {fileID: 2445127365915851488}
   - component: {fileID: 2445127365915851489}
+  - component: {fileID: -6566291393036069653}
   m_Layer: 11
   m_Name: Enemy
   m_TagString: Enemy
@@ -156,7 +157,7 @@ MonoBehaviour:
   repathRate: 0.1
   canSearch: 1
   canMove: 1
-  maxSpeed: 0.5
+  maxSpeed: 1
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -202,3 +203,15 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
+--- !u!114 &-6566291393036069653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079618090016529742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53d745edc90201042be0473b082b34a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

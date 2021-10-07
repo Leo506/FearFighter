@@ -46,6 +46,10 @@ public class RoomGenerator : MonoBehaviour
         if (currentRoom != null)
             Destroy(currentRoom.gameObject);
         cells.Clear();
+        foreach (var item in FindObjectsOfType<Enemy>())
+        {
+            Destroy(item.gameObject);
+        }
 
         currentRoom = new GameObject("Room");
 
@@ -58,6 +62,13 @@ public class RoomGenerator : MonoBehaviour
             CreateExit();
             GenerateWalls();
             CreateItems();
+
+            for (int i = 0; i < Random.Range(0, 3); i++)
+            {
+                var enemy = Instantiate(_enemyPrefab);
+                enemy.GetComponent<AIDestinationSetter>().target = _player.transform;
+                enemy.GetComponent<Enemy>().InitEnemy();
+            }
 
         }
 
@@ -80,6 +91,7 @@ public class RoomGenerator : MonoBehaviour
         GenerateWalls();
         var enemy = Instantiate(_enemyPrefab);
         enemy.GetComponent<AIDestinationSetter>().target = _player.transform;
+        enemy.GetComponent<Enemy>().InitEnemy();
 
     }
 

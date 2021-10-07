@@ -8,9 +8,9 @@ public class Bullet : MonoBehaviour
     {
         Destroy(gameObject);
 
-        /*if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")
         {
-            Destroy(collision.gameObject);
-        }*/
+            collision.gameObject.GetComponent<Enemy>().GetDamage(10);
+        }
     }
 }
