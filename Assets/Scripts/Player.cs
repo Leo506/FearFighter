@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] PlayerInput _input;
-    [SerializeField] Canvas _chooseCanvas;
+    [SerializeField] Canvas _chooseCanvas, _endGameCanvas;
     [SerializeField] UnityEngine.UI.Slider _braveSlider;
     GameObject item;
     Rigidbody2D rb2D;
@@ -42,6 +43,8 @@ public class Player : MonoBehaviour
 
         _braveSlider.maxValue = brave;
         _braveSlider.value = _braveSlider.maxValue;
+
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame
@@ -74,6 +77,12 @@ public class Player : MonoBehaviour
         if (enemyIs)
         {
             Shoot(FindAngle(gameObject, _nearestEnemy));
+        }
+
+        if (countOfRoom == 3 && generator.boss == null)
+        {
+            Time.timeScale = 0;
+            _endGameCanvas.enabled = true;
         }
     }
 
@@ -119,8 +128,9 @@ public class Player : MonoBehaviour
             }
             else if (hit.collider.gameObject.tag == "Exit")
             {
-                generator.GenerateRoom(countOfRoom);
                 countOfRoom++;
+                generator.GenerateRoom(countOfRoom);
+                
             }
             return false;
         }
@@ -139,7 +149,18 @@ public class Player : MonoBehaviour
     {
         brave -= value;
         _braveSlider.value = brave;
-        Debug.Log("Получен урон. Храбрости: " + brave);
+        
+        if (brave <= 0)
+        {
+            Time.timeScale = 0;
+            _endGameCanvas.enabled = true;
+        }
+    }
+
+    public void Replay()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Prototype");
     }
 
     //Для стрельбы Заполняем массив всеми врагами в комнате

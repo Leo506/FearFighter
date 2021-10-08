@@ -6,7 +6,8 @@ using Pathfinding;
 public class Enemy : MonoBehaviour
 {
     Player target;
-    float hp = 100;
+    public float hp = 100;
+    public bool canFire = true;
    
     public void InitEnemy()
     {
@@ -20,6 +21,7 @@ public class Enemy : MonoBehaviour
         if (hp <= 0)
         {
             target.SetAllEnemiesInArray();
+            target.GetComponent<UltimateController>().AddCharge(34);
             Destroy(this.gameObject);
         }
     }
@@ -28,7 +30,7 @@ public class Enemy : MonoBehaviour
     {
         while (target.brave > 0)
         {
-            if ((Vector2.Distance(this.transform.position, target.gameObject.transform.position) <= 1f))
+            if ((Vector2.Distance(this.transform.position, target.gameObject.transform.position) <= 1f) && canFire)
                 target.GetDamage(10);
 
             yield return new WaitForSeconds(1);

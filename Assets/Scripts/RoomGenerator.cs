@@ -24,11 +24,12 @@ struct Cell
 
 public class RoomGenerator : MonoBehaviour
 {
-    [SerializeField] GameObject _floorPrefab, _wallPrefab, _exitPrefab, _enemyPrefab;
+    [SerializeField] GameObject _floorPrefab, _wallPrefab, _exitPrefab, _enemyPrefab, _bossPrefab;
     [SerializeField] GameObject[] _items;
     [SerializeField] Player _player;
     public float xOffset;
     public float yOffset;
+    public GameObject boss;
 
     GameObject currentRoom;
 
@@ -53,7 +54,7 @@ public class RoomGenerator : MonoBehaviour
 
         currentRoom = new GameObject("Room");
 
-        if (indexOfRoom == 2)
+        if (indexOfRoom == 3)
             GenerateBossArena();
         else
         {
@@ -63,9 +64,11 @@ public class RoomGenerator : MonoBehaviour
             GenerateWalls();
             CreateItems();
 
-            for (int i = 0; i < Random.Range(0, 3); i++)
+            for (int i = 0; i < Random.Range(1, 3); i++)
             {
                 var enemy = Instantiate(_enemyPrefab);
+                Cell c = cells[Random.Range(5, cells.Count)];
+                enemy.transform.position = new Vector2((c.x - 2) * xOffset, (c.y - 6) * yOffset);
                 enemy.GetComponent<AIDestinationSetter>().target = _player.transform;
                 enemy.GetComponent<Enemy>().InitEnemy();
             }
@@ -89,9 +92,9 @@ public class RoomGenerator : MonoBehaviour
 
         CreateEnter();
         GenerateWalls();
-        var enemy = Instantiate(_enemyPrefab);
-        enemy.GetComponent<AIDestinationSetter>().target = _player.transform;
-        enemy.GetComponent<Enemy>().InitEnemy();
+        boss = Instantiate(_bossPrefab);
+        boss.GetComponent<AIDestinationSetter>().target = _player.transform;
+        boss.GetComponent<Enemy>().InitEnemy();
 
     }
 
@@ -129,7 +132,6 @@ public class RoomGenerator : MonoBehaviour
             for (int y = -1; y <= 13; y++)
             {
                 Cell cell = new Cell(x, y);
-                Debug.Log($"x: {cell.x} y = {cell.y} contains? {cells.Contains(cell)}");
                 if (!cells.Contains(cell))
                 {
                     var wall = Instantiate(_wallPrefab, currentRoom.transform);
@@ -166,7 +168,6 @@ public class RoomGenerator : MonoBehaviour
         CreateCell(new Cell(x, y - 1));
 
         startCell = new Cell(x, 0);
-        Debug.Log($"Start cell: x={startCell.x} y={startCell.y}");
     }
 
     void CreateExit()
