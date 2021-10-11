@@ -4,95 +4,48 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    bool isMobile;
-    Vector2 startPos;
-    Vector2 swipeDelta;
+	[SerializeField] float lineLength;
+	LineRenderer line;
+	bool isPressing = false;
+	Vector2 startPoint, endPoint;
 
-    public float deadZone = 80;
+	void Start() {
+		line = GetComponent<LineRenderer>();
+		line.positionCount = 2;
+	}
 
-    private void Start()
-    {
-        isMobile = Application.isMobilePlatform;
-    }
+	void Update() {
+		if (Input.GetMouseButtonDown(0)) {
+			line.SetPosition(0, this.transform.position);
+			startPoint = GetMousePos();
+			isPressing = true;
+		}
 
-    // Update is called once per frame
-    void Update()
-    {
+		if (Input.GetMouseButtonUp(0)) {
+			isPressing = false;
+		}
 
-
-    }
-
-    public Vector2 GetSwipe()
-    {
-        Vector2 swipe = Vector2.zero;
-
-        if (isMobile)
-        {
-            if (Input.touchCount > 0)
-            {
-                if (Input.GetTouch(0).phase == TouchPhase.Began)
-                    startPos = Input.GetTouch(0).position;
-                else if (Input.GetTouch(0).phase == TouchPhase.Canceled || Input.GetTouch(0).phase == TouchPhase.Ended)
-                    swipe = CheckSwip();
-            }
-        }
-        else
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                startPos = Input.mousePosition;
-            }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                swipe = CheckSwip();
-            }
-        }
-        Debug.Log(swipe);
-        return swipe;
-    }
+		if (isPressing) {
+			endPoint = GetMousePos();
+			line.SetPosition(1, CorrectLineLength());
+		}
+	}
 
 
-    Vector2 CheckSwip()
-    {
-        swipeDelta = Vector2.zero;
-        Vector2 swipe = Vector2.zero;
+	Vector3 GetMousePos() {
+		Vector2 mousePos = Input.mousePosition;
+		Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
+		return new Vector2(point.x, point.y);
+	}
 
-        if (isMobile)
-        {
-            swipeDelta = (Vector2)Input.GetTouch(0).position - startPos;
-        }
-        else
-        {
-            swipeDelta = (Vector2)Input.mousePosition - startPos;
-        }
 
-        if (swipeDelta.magnitude >= deadZone)
-        {
-            if (Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y))
-            {
-                if (swipeDelta.x > 0)
-                    swipe = Vector2.right;
-                else
-                        swipe = Vector2.left;
-            }
-            else
-            {
-                if (swipeDelta.y > 0)
-                        swipe = Vector2.up;
-                else
-                        swipe = Vector2.down;
-            }
-        }
+	Vector3 CorrectLineLength() {
+		Vector2 dir = endPoint - startPoint;
+		if (dir.magnitude > lineLength) {
+			return (Vector2)line.GetPosition(0) + dir.normalized * lineLength;
+		}
 
-        ResetSwip();
-        return swipe;
-    }
-
-    void ResetSwip()
-    {
-
-        startPos = Vector2.zero;
-        swipeDelta = Vector2.zero;
-    }
+		return (Vector2)line.GetPosition(0) + dir;
+	}
 
 }
