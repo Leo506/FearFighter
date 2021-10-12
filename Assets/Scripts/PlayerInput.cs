@@ -54,7 +54,7 @@ public class PlayerInput : MonoBehaviour
 	/// <summary>Возвращает направление движения</summary>
 	public Vector3 GetDir() {
 		if (line.GetPosition(1) != Vector3.zero)
-			return (line.GetPosition(1) - line.GetPosition(0)).normalized;
+			return (endPoint - startPoint).normalized;
 
 		return Vector3.zero;
 	}
