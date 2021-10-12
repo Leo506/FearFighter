@@ -4,8 +4,28 @@
 		"selected_items":
 		[
 			[
+				"line",
+				"line\tLineRenderer"
+			],
+			[
+				"lin",
+				"lineLength\tfloat"
+			],
+			[
+				"lien",
+				"lineLength\tfloat"
+			],
+			[
+				"po",
+				"pos1\tVector2"
+			],
+			[
+				"lie",
+				"lineLength\tfloat"
+			],
+			[
 				"Get",
-				"GetMouseButtonDown"
+				"GetMousePos()\tVector3"
 			],
 			[
 				"Coll",
@@ -328,10 +348,6 @@
 				"int_ptr"
 			],
 			[
-				"po",
-				"pointer2"
-			],
-			[
 				"ne",
 				"nextInt"
 			],
@@ -471,6 +487,15 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "Assets/Scripts/PlayerInput.cs",
+			"settings":
+			{
+				"buffer_size": 1107,
+				"encoding": "UTF-8 with BOM",
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -609,8 +634,41 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "Assets/Scripts/PlayerInput.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1107,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1073,
+								1073
+							]
+						],
+						"settings":
+						{
+							"oops":
+							{
+								"962,963": "Требуется \")\""
+							},
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 432.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -652,6 +710,10 @@
 	"output.find_results":
 	{
 		"height": 0.0
+	},
+	"output.variable_get":
+	{
+		"height": 163.0
 	},
 	"pinned_build_system": "",
 	"project": "FF.sublime-project",
@@ -695,7 +757,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 308.0,
+	"side_bar_width": 217.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

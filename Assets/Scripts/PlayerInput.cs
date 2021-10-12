@@ -19,10 +19,12 @@ public class PlayerInput : MonoBehaviour
 			line.SetPosition(0, this.transform.position);
 			startPoint = GetMousePos();
 			isPressing = true;
+			Player.canMove = false;
 		}
 
 		if (Input.GetMouseButtonUp(0)) {
 			isPressing = false;
+			Player.canMove = true;
 		}
 
 		if (isPressing) {
@@ -46,6 +48,15 @@ public class PlayerInput : MonoBehaviour
 		}
 
 		return (Vector2)line.GetPosition(0) + dir;
+	}
+
+
+	/// <summary>Возвращает направление движения</summary>
+	public Vector3 GetDir() {
+		if (line.GetPosition(1) != Vector3.zero)
+			return (line.GetPosition(1) - line.GetPosition(0)).normalized;
+
+		return Vector3.zero;
 	}
 
 }
