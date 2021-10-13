@@ -7,29 +7,36 @@ public class PlayerInput : MonoBehaviour
 	[SerializeField] float lineLength;
 	LineRenderer line;
 	bool isPressing = false;
-	Vector2 startPoint, endPoint;
+	Vector2 startPoint = Vector2.zero;
+	Vector2 endPoint = Vector2.zero;
+
+	Player player;
 
 	void Start() {
 		line = GetComponent<LineRenderer>();
 		line.positionCount = 2;
+		player = FindObjectOfType<Player>();
 	}
 
 	void Update() {
-		if (Input.GetMouseButtonDown(0)) {
-			line.SetPosition(0, this.transform.position);
-			startPoint = GetMousePos();
-			isPressing = true;
-			Player.canMove = false;
-		}
+		if (!Player.canMove) {
+			if (Input.GetMouseButtonDown(0)) {
+				line.SetPosition(0, this.transform.position);
+				startPoint = GetMousePos();
+				isPressing = true;
+			}
 
-		if (Input.GetMouseButtonUp(0)) {
-			isPressing = false;
-			Player.canMove = true;
-		}
+			if (Input.GetMouseButtonUp(0)) {
+				isPressing = false;
+				Player.canMove = true;
+				player.SetDirection((Vector2)GetDir());
+				line.SetPosition(1, line.GetPosition(0));
+			}
 
-		if (isPressing) {
-			endPoint = GetMousePos();
-			line.SetPosition(1, CorrectLineLength());
+			if (isPressing) {
+				endPoint = GetMousePos();
+				line.SetPosition(1, CorrectLineLength());
+			}
 		}
 	}
 
@@ -51,12 +58,8 @@ public class PlayerInput : MonoBehaviour
 	}
 
 
-	/// <summary>Возвращает направление движения</summary>
-	public Vector3 GetDir() {
-		if (line.GetPosition(1) != Vector3.zero)
-			return (endPoint - startPoint).normalized;
-
-		return Vector3.zero;
+	Vector3 GetDir() {
+		return (endPoint - startPoint).normalized;
 	}
 
 }
