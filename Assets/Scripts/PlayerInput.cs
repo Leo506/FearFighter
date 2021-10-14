@@ -27,10 +27,14 @@ public class PlayerInput : MonoBehaviour
 			}
 
 			if (Input.GetMouseButtonUp(0)) {
-				isPressing = false;
-				Player.canMove = true;
-				player.SetDirection((Vector2)GetDir());
-				line.SetPosition(1, line.GetPosition(0));
+				endPoint = GetMousePos();
+
+				if ((endPoint - startPoint).magnitude >= 0.1f) {
+					isPressing = false;
+					Player.canMove = true;
+					player.SetDirection((Vector2)GetDir());
+					line.SetPosition(1, line.GetPosition(0));
+				}
 			}
 
 			if (isPressing) {
