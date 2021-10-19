@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2691646684538077372}
   - component: {fileID: 2691646684538077375}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2691646684787138803}
   - component: {fileID: 2691646684787138802}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,8 @@ GameObject:
   - component: {fileID: 2691646685307012675}
   - component: {fileID: 2691646685307012679}
   - component: {fileID: -9179024913449984907}
-  m_Layer: 0
+  - component: {fileID: 8906713945019481424}
+  m_Layer: 8
   m_Name: Wall_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,6 +289,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0678b75e0b6e0eb8da0cfd4336688271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8906713945019481424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2691646685307012676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183748dd497aa473a98ff0cd8cb67fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  uniqueID: 5548913760711541667
+  updateError: 0.002
+  checkTime: 0.002
 --- !u!1 &2691646685936601653
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +315,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2691646685936601652}
   - component: {fileID: 2691646685936601655}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +397,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2691646685944965929}
   - component: {fileID: 2691646685944965928}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +479,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2691646686107508479}
   - component: {fileID: 2691646686107508478}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
