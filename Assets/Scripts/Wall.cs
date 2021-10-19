@@ -9,5 +9,7 @@ public class Wall : MonoBehaviour
     	foreach (var item in this.gameObject.GetComponents<BoxCollider2D>()) {
     		item.edgeRadius = 0;
     	}
+
+    	this.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; 
     }
 }

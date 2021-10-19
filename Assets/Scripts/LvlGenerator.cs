@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class LvlGenerator : MonoBehaviour
 {
-    [SerializeField] GameObject[] _obstacles;  // Массив возможных препятствий в комнате
-    [SerializeField] GameObject _outerWalls;   // Префаб внешних стен
+    [SerializeField] GameObject[] _obstacles;   // Массив возможных препятствий в комнате
+    [SerializeField] GameObject _outerWalls;    // Префаб внешних стен
+    [SerializeField] GameObject _playerSpawner; // Объект, где будет спавниться игрок
+    [SerializeField] GameObject _playerPrefab;  // Префаб игрока
+    [SerializeField] CinemachineVirtualCamera camera;
 
     public void GenerateRoom() {
     	if (_outerWalls != null)
@@ -18,6 +22,8 @@ public class LvlGenerator : MonoBehaviour
     	}
 
     	Invoke("StopWallMovement", 5);
+
+    	Invoke("SpawnPlayer", 5);
     }
 
 
@@ -25,5 +31,15 @@ public class LvlGenerator : MonoBehaviour
     void StopWallMovement() {
 		foreach (var item in FindObjectsOfType<Wall>())
     		item.FixWall();
+    }
+
+
+    void SpawnPlayer() {
+    	_playerSpawner.GetComponent<BoxCollider2D>().enabled = false;
+
+    	var player = Instantiate(_playerPrefab);
+    	player.transform.localPosition = _playerSpawner.transform.position;
+
+    	camera.Follow = player.transform;
     }
 }
