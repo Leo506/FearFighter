@@ -8,6 +8,7 @@ public class Wall : MonoBehaviour
     public void FixWall() {
     	foreach (var item in this.gameObject.GetComponents<BoxCollider2D>()) {
     		item.edgeRadius = 0;
+    		item.enabled = false;
     	}
 
     	this.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; 

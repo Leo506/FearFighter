@@ -23,7 +23,7 @@ public class LvlOverview : MonoBehaviour
 
 
     IEnumerator Overview() {
-    	var step = (endCamSize - startCamSize) / overviewTime;
+    	var step = (endCamSize - startCamSize) / (overviewTime * 100);
 
     	camera.m_Lens.OrthographicSize = startCamSize;
     	for (int i = 0; i < overviewTime * 100; i++) {
@@ -35,5 +35,7 @@ public class LvlOverview : MonoBehaviour
     		camera.m_Lens.OrthographicSize -= step;
     		yield return new WaitForSeconds(0.01f);
     	}
+
+    	FindObjectOfType<LvlGenerator>().SpawnPlayer();
     }
 }
