@@ -31,13 +31,13 @@ public class PlayerMovement : MonoBehaviour
 
 
     void OnCollisionEnter2D(Collision2D other) {
-    	if (availableRebounds > 0) {
-    		availableRebounds--;
-    		direction = (Vector2)Vector3.Reflect(direction, other.contacts[0].normal).normalized;
-    	} else {
-    		direction = Vector2.zero;
-    		availableRebounds = 1;
-    		inMove = false;
-    	}
+    	var dir = other.gameObject.GetComponent<Wall>().ChangePlayerDirection(direction, other.contacts[0].normal, ref availableRebounds);
+
+        if (dir == Vector2.zero) {
+            direction = dir;
+            inMove = false;
+        } else {
+            direction = dir;
+        }
     }
 }
