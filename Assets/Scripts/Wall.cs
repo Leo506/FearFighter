@@ -11,6 +11,20 @@ public class Wall : MonoBehaviour
     		item.enabled = false;
     	}
 
-    	this.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; 
+    	Rigidbody2D rb2d = this.gameObject.GetComponent<Rigidbody2D>();
+
+    	if (rb2d != null)
+    		this.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; 
+    }
+
+
+    public virtual Vector2 ChangePlayerDirection(Vector2 dir, Vector3 normal, ref int rebounds) {
+    	if (rebounds > 0) {
+    		rebounds--;
+    		return (Vector2)Vector3.Reflect(dir, normal).normalized;
+    	} else {
+    		rebounds = 1;
+    		return Vector2.zero;
+    	}
     }
 }
