@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1914873039209623632}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: OuterWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,8 @@ GameObject:
   - component: {fileID: 2919016978669054433}
   - component: {fileID: 3519675768753860982}
   - component: {fileID: 4115805421406614785}
-  m_Layer: 0
+  - component: {fileID: 45336237061902177}
+  m_Layer: 8
   m_Name: OuterWall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,6 +144,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
+--- !u!114 &45336237061902177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790838286667671324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183748dd497aa473a98ff0cd8cb67fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  uniqueID: 4109339991829241512
+  updateError: 1
+  checkTime: 0.002
 --- !u!1 &1982008243088723729
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +171,8 @@ GameObject:
   - component: {fileID: 6709044165202279516}
   - component: {fileID: 6795943909537406374}
   - component: {fileID: 296839051856212211}
-  m_Layer: 0
+  - component: {fileID: 882269872985177504}
+  m_Layer: 8
   m_Name: OuterWall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,6 +270,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
+--- !u!114 &882269872985177504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982008243088723729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183748dd497aa473a98ff0cd8cb67fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  uniqueID: 7386333208136297691
+  updateError: 1
+  checkTime: 0.002
 --- !u!1 &3956685225068943778
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,7 +297,8 @@ GameObject:
   - component: {fileID: 7934377769110272770}
   - component: {fileID: 597515367343459821}
   - component: {fileID: 6477355994129903940}
-  m_Layer: 0
+  - component: {fileID: 3804051741756418831}
+  m_Layer: 8
   m_Name: OuterWall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,6 +396,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
+--- !u!114 &3804051741756418831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3956685225068943778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183748dd497aa473a98ff0cd8cb67fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  uniqueID: 2183514525801448502
+  updateError: 1
+  checkTime: 0.002
 --- !u!1 &5525601587334403165
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,7 +423,8 @@ GameObject:
   - component: {fileID: 3030460468348101596}
   - component: {fileID: 5971522055442200977}
   - component: {fileID: 8004847191640070831}
-  m_Layer: 0
+  - component: {fileID: 7053166612536066979}
+  m_Layer: 8
   m_Name: OuterWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,3 +522,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
+--- !u!114 &7053166612536066979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5525601587334403165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183748dd497aa473a98ff0cd8cb67fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  uniqueID: 3326549052517392483
+  updateError: 1
+  checkTime: 0.002
