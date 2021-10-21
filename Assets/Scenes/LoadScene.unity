@@ -457,9 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _obstacles:
-  - {fileID: 1175698559453211144, guid: 74ba02e42335b502ebd7e87fffea0594, type: 3}
-  - {fileID: 8905806922259480786, guid: 0b211ff0a7db11cebbd6feb4f19e26b4, type: 3}
-  - {fileID: 2851508267569961133, guid: e5a9a9bf8fba3c9879e9133af6dcb133, type: 3}
+  - {fileID: 7395811757650830242, guid: 15f6353064cea6d1592679ec9ddfc072, type: 3}
   _outerWalls: {fileID: 607713030647564185, guid: 850cc6d44624e76ad8115f5da1de9819, type: 3}
   _playerSpawner: {fileID: 1563357120}
   _playerPrefab: {fileID: 1519922702462133015, guid: 8fa1510bfa40dea3c8f9ecc1314b15cb, type: 3}
@@ -496,7 +494,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1563357121
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -555,7 +553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1799095591
 MonoBehaviour:
   m_ObjectHideFlags: 0
