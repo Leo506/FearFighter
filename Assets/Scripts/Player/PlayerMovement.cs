@@ -18,10 +18,10 @@ public class PlayerMovement : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    void FixedUpdate()
     {
-       rb2d.velocity = direction * speed * Time.deltaTime;
+       rb2d.velocity = direction * speed * Time.fixedDeltaTime;
     }
 
 
@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     void OnCollisionEnter2D(Collision2D other) {
-    	var dir = other.gameObject.GetComponent<Wall>().ChangePlayerDirection(direction, other.contacts[0].normal, ref availableRebounds);
+    	var dir = other.gameObject.GetComponent<IChangingDirection>().ChangePlayerDirection(direction, other.contacts[0].normal, ref availableRebounds);
 
         if (dir == Vector2.zero) {
             direction = dir;

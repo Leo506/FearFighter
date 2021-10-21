@@ -11,12 +11,17 @@ public class LvlGenerator : MonoBehaviour
     [SerializeField] GameObject _playerSpawner; 	// Объект, где будет спавниться игрок
     [SerializeField] GameObject _playerPrefab;  	// Префаб игрока
     [SerializeField] GameObject[] _enemiesPrefabs;  // Прафабы врагов
-	CinemachineVirtualCamera camera;
+	[SerializeField] CinemachineVirtualCamera camera;
 
+	[Header("Настройка количества препятствий")]
+	public int maxObstaclesCount = 15;
+	public int minObstaclesCount = 9;
 
-	void Awake() {
-		DontDestroyOnLoad(this.gameObject);
-	}
+	[Header("Диапазон возможных координат для спавна")]
+	public float minX = -8.0f;
+	public float maxX = 8.0f;
+	public float minY = -8.0f;
+	public float maxY = 8.0f;
 
 
 	void Start() {
@@ -28,22 +33,41 @@ public class LvlGenerator : MonoBehaviour
     	if (_outerWalls != null)
     		Instantiate(_outerWalls, this.transform);
 
-    	int countOfObstacles = Random.Range(6, 9);  // Определяем количество препятствий комнате
+    	int countOfObstacles = Random.Range(minObstaclesCount, maxObstaclesCount);  // Определяем количество препятствий комнате
 
+
+    	// Создаём нужное количество препятствий
     	for (int i = 0; i < countOfObstacles; i++) {
-    		Instantiate(_obstacles[Random.Range(0, _obstacles.Length)], this.transform);
-    	}
+    		var index = Random.Range(0, _obstacles.Length);
+    		var objToSpawn = _obstacles[index];
 
-    	Invoke("StopWallMovement", 5);
+    		// Делаем 10 попыток создать препятствие
+    		for (int j = 0; j < 10; j++) {
+    			Vector2 newPos = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+
+    			
+    			// Проверка доступности места
+    			if (CheckPos(newPos, objToSpawn)) {
+    				var obj = Instantiate(objToSpawn);
+    				obj.transform.position = newPos;
+    				break;
+    			}
+    		}
+    	}
     }
 
+    
+    bool CheckPos(Vector2 pos, GameObject obj) {
+    	Vector2 size = obj.GetComponent<BoxCollider2D>().size;
 
+    	float xTopRight = pos.x + (size.x * obj.transform.localScale.x) / 2;
+    	float yTopRight = pos.y + (size.y * obj.transform.localScale.y) / 2;
 
-    void StopWallMovement() {
-		foreach (var item in FindObjectsOfType<Wall>())
-    		item.FixWall();
+    	float xBottomLeft = pos.x - (size.x * obj.transform.localScale.x) / 2;
+    	float yBottomLeft = pos.y - (size.y * obj.transform.localScale.y) / 2;
 
-    	SceneManager.LoadScene("MainScene");
+    	return Physics2D.OverlapArea(new Vector2(xTopRight, yTopRight), new Vector2(xBottomLeft, yBottomLeft)) == null;
+
     }
 
 
@@ -52,8 +76,6 @@ public class LvlGenerator : MonoBehaviour
 
     	var player = Instantiate(_playerPrefab);
     	player.transform.localPosition = _playerSpawner.transform.position;
-
-    	camera = FindObjectOfType<CinemachineVirtualCamera>();
 
     	camera.Follow = player.transform;
     }
@@ -65,7 +87,7 @@ public class LvlGenerator : MonoBehaviour
     	for (int i = 0; i < countOfEnemies; i++) {
     		var index = Random.Range(0, _enemiesPrefabs.Length);
     		for (int j = 0; j < 10; j++) {
-    			Vector2 newPos = new Vector2(Random.Range(-8, 8), Random.Range(-8, 8));
+    			Vector2 newPos = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
 
     			if (Physics2D.OverlapCircle(newPos, _enemiesPrefabs[index].GetComponent<CircleCollider2D>().radius * 2) == null) {
     				var obj = Instantiate(_enemiesPrefabs[index]);
