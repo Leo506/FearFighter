@@ -11,12 +11,17 @@ public class LvlGenerator : MonoBehaviour
     [SerializeField] GameObject _playerSpawner; 	// Объект, где будет спавниться игрок
     [SerializeField] GameObject _playerPrefab;  	// Префаб игрока
     [SerializeField] GameObject[] _enemiesPrefabs;  // Прафабы врагов
-	CinemachineVirtualCamera camera;
+	[SerializeField] CinemachineVirtualCamera camera;
 
+	[Header("Настройка количества препятствий")]
+	public int maxObstaclesCount = 15;
+	public int minObstaclesCount = 9;
 
-	void Awake() {
-		DontDestroyOnLoad(this.gameObject);
-	}
+	[Header("Диапазон возможных координат для спавна")]
+	public float minX = -8.0f;
+	public float maxX = 8.0f;
+	public float minY = -8.0f;
+	public float maxY = 8.0f;
 
 
 	void Start() {
@@ -28,7 +33,7 @@ public class LvlGenerator : MonoBehaviour
     	if (_outerWalls != null)
     		Instantiate(_outerWalls, this.transform);
 
-    	int countOfObstacles = Random.Range(9, 15);  // Определяем количество препятствий комнате
+    	int countOfObstacles = Random.Range(minObstaclesCount, maxObstaclesCount);  // Определяем количество препятствий комнате
 
 
     	// Создаём нужное количество препятствий
@@ -38,7 +43,7 @@ public class LvlGenerator : MonoBehaviour
 
     		// Делаем 10 попыток создать препятствие
     		for (int j = 0; j < 10; j++) {
-    			Vector2 newPos = new Vector2(Random.Range(-8, 8), Random.Range(-8, 8));
+    			Vector2 newPos = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
 
     			
     			// Проверка доступности места
@@ -72,8 +77,6 @@ public class LvlGenerator : MonoBehaviour
     	var player = Instantiate(_playerPrefab);
     	player.transform.localPosition = _playerSpawner.transform.position;
 
-    	camera = FindObjectOfType<CinemachineVirtualCamera>();
-
     	camera.Follow = player.transform;
     }
 
@@ -84,7 +87,7 @@ public class LvlGenerator : MonoBehaviour
     	for (int i = 0; i < countOfEnemies; i++) {
     		var index = Random.Range(0, _enemiesPrefabs.Length);
     		for (int j = 0; j < 10; j++) {
-    			Vector2 newPos = new Vector2(Random.Range(-8, 8), Random.Range(-8, 8));
+    			Vector2 newPos = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
 
     			if (Physics2D.OverlapCircle(newPos, _enemiesPrefabs[index].GetComponent<CircleCollider2D>().radius * 2) == null) {
     				var obj = Instantiate(_enemiesPrefabs[index]);

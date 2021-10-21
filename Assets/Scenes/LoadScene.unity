@@ -457,7 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _obstacles:
-  - {fileID: 7395811757650830242, guid: 15f6353064cea6d1592679ec9ddfc072, type: 3}
+  - {fileID: 1175698559453211144, guid: 74ba02e42335b502ebd7e87fffea0594, type: 3}
   _outerWalls: {fileID: 607713030647564185, guid: 850cc6d44624e76ad8115f5da1de9819, type: 3}
   _playerSpawner: {fileID: 1563357120}
   _playerPrefab: {fileID: 1519922702462133015, guid: 8fa1510bfa40dea3c8f9ecc1314b15cb, type: 3}
