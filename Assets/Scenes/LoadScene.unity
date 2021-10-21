@@ -463,6 +463,8 @@ MonoBehaviour:
   _outerWalls: {fileID: 607713030647564185, guid: 850cc6d44624e76ad8115f5da1de9819, type: 3}
   _playerSpawner: {fileID: 1563357120}
   _playerPrefab: {fileID: 1519922702462133015, guid: 8fa1510bfa40dea3c8f9ecc1314b15cb, type: 3}
+  _enemiesPrefabs:
+  - {fileID: 341939856747376149, guid: 541edbb6913066e48b755cd4a1033980, type: 3}
 --- !u!4 &1319344871
 Transform:
   m_ObjectHideFlags: 0

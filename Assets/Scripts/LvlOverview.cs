@@ -37,5 +37,6 @@ public class LvlOverview : MonoBehaviour
     	}
 
     	FindObjectOfType<LvlGenerator>().SpawnPlayer();
+    	FindObjectOfType<LvlGenerator>().SpawnEnemies();
     }
 }

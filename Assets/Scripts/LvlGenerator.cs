@@ -6,10 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class LvlGenerator : MonoBehaviour
 {
-    [SerializeField] GameObject[] _obstacles;   // Массив возможных препятствий в комнате
-    [SerializeField] GameObject _outerWalls;    // Префаб внешних стен
-    [SerializeField] GameObject _playerSpawner; // Объект, где будет спавниться игрок
-    [SerializeField] GameObject _playerPrefab;  // Префаб игрока
+    [SerializeField] GameObject[] _obstacles;   	// Массив возможных препятствий в комнате
+    [SerializeField] GameObject _outerWalls;    	// Префаб внешних стен
+    [SerializeField] GameObject _playerSpawner; 	// Объект, где будет спавниться игрок
+    [SerializeField] GameObject _playerPrefab;  	// Префаб игрока
+    [SerializeField] GameObject[] _enemiesPrefabs;  // Прафабы врагов
 	CinemachineVirtualCamera camera;
 
 
@@ -55,5 +56,23 @@ public class LvlGenerator : MonoBehaviour
     	camera = FindObjectOfType<CinemachineVirtualCamera>();
 
     	camera.Follow = player.transform;
+    }
+
+
+    public void SpawnEnemies() {
+    	var countOfEnemies = Random.Range(5, 10);
+
+    	for (int i = 0; i < countOfEnemies; i++) {
+    		var index = Random.Range(0, _enemiesPrefabs.Length);
+    		for (int j = 0; j < 10; j++) {
+    			Vector2 newPos = new Vector2(Random.Range(-8, 8), Random.Range(-8, 8));
+
+    			if (Physics2D.OverlapCircle(newPos, _enemiesPrefabs[index].GetComponent<CircleCollider2D>().radius * 2) == null) {
+    				var obj = Instantiate(_enemiesPrefabs[index]);
+    				obj.transform.position = newPos;
+    				break;
+    			}
+    		}
+    	}
     }
 }

@@ -4,16 +4,112 @@
 		"selected_items":
 		[
 			[
-				"ra",
-				"Range"
+				"in",
+				"inMove"
 			],
 			[
-				"Ran",
-				"Random"
+				"VE",
+				"Vector3"
+			],
+			[
+				"Ge",
+				"GenerateRoom"
+			],
+			[
+				"Cine",
+				"CinemachineVirtualCamera"
+			],
+			[
+				"pla",
+				"playerSpawner"
+			],
+			[
+				"pos",
+				"pos"
+			],
+			[
+				"Gm",
+				"GameObject"
+			],
+			[
+				"corne",
+				"corner"
+			],
+			[
+				"co",
+				"corner"
+			],
+			[
+				"cor",
+				"corners"
+			],
+			[
+				"y",
+				"ySize"
+			],
+			[
+				"x",
+				"xSize"
+			],
+			[
+				"ite",
+				"item"
+			],
+			[
+				"tr",
+				"transform"
+			],
+			[
+				"po",
+				"position"
+			],
+			[
+				"Collider",
+				"Collider2D"
+			],
+			[
+				"wal",
+				"wall"
+			],
+			[
+				"wa",
+				"wall"
+			],
+			[
+				"used",
+				"usedY1"
+			],
+			[
+				"use",
+				"usedY0"
+			],
+			[
+				"usedx",
+				"usedX1"
 			],
 			[
 				"ma",
 				"maxY"
+			],
+			[
+				"min",
+				"minY"
+			],
+			[
+				"Ran",
+				"Range"
+			],
+			[
+				"_",
+				"_obstacles"
+			],
+			[
+				"Y",
+				"ySize"
+			],
+			[
+				"ra",
+				"Range"
 			],
 			[
 				"mi",
@@ -26,14 +122,6 @@
 			[
 				"Ra",
 				"Random"
-			],
-			[
-				"min",
-				"minX"
-			],
-			[
-				"Collider",
-				"BoxCollider2D"
 			],
 			[
 				"bo",
@@ -68,14 +156,6 @@
 				"newPos"
 			],
 			[
-				"y",
-				"ySize"
-			],
-			[
-				"x",
-				"xSize"
-			],
-			[
 				"start",
 				"StartOverview"
 			],
@@ -100,20 +180,8 @@
 				"movement"
 			],
 			[
-				"in",
-				"input"
-			],
-			[
 				"line",
 				"line"
-			],
-			[
-				"pos",
-				"pos2"
-			],
-			[
-				"pla",
-				"playerLine"
 			],
 			[
 				"Uni",
@@ -152,10 +220,6 @@
 				"lineLength\tfloat"
 			],
 			[
-				"po",
-				"pos1\tVector2"
-			],
-			[
 				"lie",
 				"lineLength\tfloat"
 			],
@@ -170,10 +234,6 @@
 			[
 				"re",
 				"registrate_user_command"
-			],
-			[
-				"use",
-				"users"
 			],
 			[
 				"us",
@@ -454,66 +514,6 @@
 			[
 				"amou",
 				"amount_data"
-			],
-			[
-				"from",
-				"from_data"
-			],
-			[
-				"tr",
-				"try\tTry/Except"
-			],
-			[
-				"add",
-				"add_argument"
-			],
-			[
-				"int",
-				"int_ptr"
-			],
-			[
-				"ne",
-				"nextInt"
-			],
-			[
-				"out",
-				"outString"
-			],
-			[
-				"mus",
-				"musicFile"
-			],
-			[
-				"ran",
-				"randomFile"
-			],
-			[
-				"mu",
-				"musicFile"
-			],
-			[
-				"stri",
-				"String"
-			],
-			[
-				"ex",
-				"exp"
-			],
-			[
-				"Audio",
-				"AudioSystem"
-			],
-			[
-				"file",
-				"soundFile"
-			],
-			[
-				"Au",
-				"AudioInputStream"
-			],
-			[
-				"io",
-				"iostream\tstandard header"
 			]
 		]
 	},
@@ -523,16 +523,7 @@
 			"file": "Assets/Scripts/LvlGenerator.cs",
 			"settings":
 			{
-				"buffer_size": 2015,
-				"encoding": "UTF-8 with BOM",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/Scripts/Test.cs",
-			"settings":
-			{
-				"buffer_size": 538,
+				"buffer_size": 2280,
 				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
@@ -541,28 +532,25 @@
 			"file": "Assets/Scripts/LvlOverview.cs",
 			"settings":
 			{
-				"buffer_size": 875,
+				"buffer_size": 929,
 				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "using System.Collections;\nusing System.Collections.Generic;\nusing UnityEngine;\n\npublic class Wall : MonoBehaviour\n{\n\tpublic float xSize = 0.0f;\n\tpublic float ySize = 0.0f;\n\t\n\n\tpublic void CalculateSize() {\n\n\t\txSize = GetComponent<BoxCollider2D>().size.x;\n\t\tySize = GetComponent<BoxCollider2D>().size.y;\n\t}\n}\n",
 			"file": "Assets/Scripts/Wall.cs",
-			"file_size": 645,
-			"file_write_time": 132791538090193636,
 			"settings":
 			{
-				"buffer_size": 308,
+				"buffer_size": 612,
 				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Assets/Scripts/GameController.cs",
+			"file": "Assets/Scripts/Player/PlayerMovement.cs",
 			"settings":
 			{
-				"buffer_size": 403,
+				"buffer_size": 935,
 				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
@@ -573,6 +561,24 @@
 			{
 				"buffer_size": 40,
 				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/StickyWall.cs",
+			"settings":
+			{
+				"buffer_size": 265,
+				"encoding": "UTF-8 with BOM",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/ElasticWall.cs",
+			"settings":
+			{
+				"buffer_size": 283,
+				"encoding": "UTF-8 with BOM",
 				"line_ending": "Unix"
 			}
 		}
@@ -625,6 +631,9 @@
 	},
 	"file_history":
 	[
+		"/home/artem/FF/FearFighter/Assets/Scripts/Test.cs",
+		"/home/artem/FF/FearFighter/Assets/Scripts/GameController.cs",
+		"/home/artem/FF/FearFighter/Assets/Scripts/Lvl.cs",
 		"/home/artem/FF/FearFighter/Assets/Scripts/Leaf.cs",
 		"/home/artem/FF/FearFighter/Assets/Scripts/PlayerLine.cs",
 		"/home/artem/FF/FearFighter/Assets/Scripts/PlayerInput.cs",
@@ -632,7 +641,6 @@
 		"/home/artem/FF/FearFighter/Assets/Scripts/Player.cs",
 		"/home/artem/FF/FearFighter/Assets/Scripts/Enemy.cs",
 		"/home/artem/Загрузки/vychislenia.txt",
-		"/home/artem/FF/FearFighter/Assets/Scripts/GameController.cs",
 		"/home/artem/FF/FearFighter/FF.sublime-project",
 		"/home/artem/FF/FearFighter/'/home/artem/FF/FearFighter/Assets/Scripts/PlayerInput.cs'",
 		"/home/artem/FF/FearFighter/Assets/Shaders/TestShader.shader",
@@ -738,15 +746,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2015,
+						"buffer_size": 2280,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1289,
-								1289
+								1727,
+								1727
 							]
 						],
 						"settings":
@@ -754,7 +762,7 @@
 							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 648.0,
+						"translation.y": 288.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -762,47 +770,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "Assets/Scripts/Test.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 538,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								343,
-								343
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "Assets/Scripts/LvlOverview.cs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 875,
+						"buffer_size": 929,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								509,
-								509
+								920,
+								920
 							]
 						],
 						"settings":
@@ -810,27 +790,27 @@
 							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 72.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "Assets/Scripts/Wall.cs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 308,
+						"buffer_size": 612,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								308,
-								308
+								329,
+								329
 							]
 						],
 						"settings":
@@ -845,35 +825,37 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "Assets/Scripts/GameController.cs",
+					"buffer": 3,
+					"file": "Assets/Scripts/Player/PlayerMovement.cs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 403,
+						"buffer_size": 935,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								315,
-								315
+								758,
+								758
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 504.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 4,
 					"file": "/home/artem/FF/token.txt",
 					"semi_transient": false,
 					"settings":
@@ -897,7 +879,63 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Assets/Scripts/StickyWall.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 265,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								230,
+								230
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Assets/Scripts/ElasticWall.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 283,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								280,
+								280
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
