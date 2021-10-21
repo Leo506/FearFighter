@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8905806920919767145}
   - component: {fileID: 8905806920919767144}
   - component: {fileID: 1298141828673886799}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 8905806921017306559}
   - component: {fileID: 8905806921017306558}
   - component: {fileID: 7071493918300726515}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 8905806921025653922}
   - component: {fileID: 8905806921025653921}
   - component: {fileID: 4808412106317936147}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 8905806921347941930}
   - component: {fileID: 8905806921347941929}
   - component: {fileID: 8781399333829033664}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -447,7 +447,7 @@ GameObject:
   - component: {fileID: 8905806921704973925}
   - component: {fileID: 8905806921704973924}
   - component: {fileID: 6135060383355069118}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -557,7 +557,7 @@ GameObject:
   - component: {fileID: 8905806922259480784}
   - component: {fileID: 6831237515932130292}
   - component: {fileID: -1781159850864530929}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sticky_wall_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -591,7 +591,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8905806922259480786}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -611,7 +611,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8905806922259480786}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -629,7 +629,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 3, y: 3}
-  m_EdgeRadius: 1
+  m_EdgeRadius: 0
 --- !u!114 &-1781159850864530929
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PlayerInput : MonoBehaviour
 
     PlayerLine line;
     PlayerMovement movement;
+
+    IChangingTime[] toChangeTime;
 
     void Start() {
     	cam = Camera.main;
@@ -31,6 +34,11 @@ public class PlayerInput : MonoBehaviour
     	endPoint = Vector2.zero;
     	isPressing = true;
 
+        toChangeTime = FindObjectsOfType<MonoBehaviour>().OfType<IChangingTime>().ToArray();
+
+        foreach (var item in toChangeTime)
+            item.SlowDownTime();
+
     	#if UNITY_EDITOR
     		startPoint = GetMousePos();
     	#endif
@@ -46,6 +54,8 @@ public class PlayerInput : MonoBehaviour
     	movement.SetDir(GetDir());
     	movement.inMove = true;
     	line.DrawLine(this.gameObject.transform.position, Vector3.zero, Vector3.zero);
+        foreach (var item in toChangeTime)
+            item.AccelerateTime();
     }
 
 

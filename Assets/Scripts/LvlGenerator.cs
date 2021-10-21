@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.SceneManagement;
+using Pathfinding;
 
 public class LvlGenerator : MonoBehaviour
 {
@@ -23,9 +24,14 @@ public class LvlGenerator : MonoBehaviour
 	public float minY = -8.0f;
 	public float maxY = 8.0f;
 
+	[Header("Диапазон количества врагов на уровне")]
+	public int minEnemiesCount = 3;
+	public int maxEnemiesCount = 7;
 
-	void Start() {
+
+	void Awake() {
 		GenerateRoom();
+        AstarPath.active.Scan();
 	}
 
 
@@ -82,7 +88,7 @@ public class LvlGenerator : MonoBehaviour
 
 
     public void SpawnEnemies() {
-    	var countOfEnemies = Random.Range(5, 10);
+    	var countOfEnemies = Random.Range(minEnemiesCount, maxEnemiesCount);
 
     	for (int i = 0; i < countOfEnemies; i++) {
     		var index = Random.Range(0, _enemiesPrefabs.Length);
@@ -92,9 +98,7 @@ public class LvlGenerator : MonoBehaviour
     			if (Physics2D.OverlapCircle(newPos, _enemiesPrefabs[index].GetComponent<CircleCollider2D>().radius * 2) == null) {
     				var obj = Instantiate(_enemiesPrefabs[index]);
     				obj.transform.position = newPos;
-                    //AAAAAAAAAAAAAAAAAAA
                     obj.GetComponent<EnemyController>().SetTarget(GameObject.FindWithTag("Player").transform);
-                    //AAAAAAAAAAAAAAAAAAA
     				break;
     			}
     		}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2851508266222370838}
   - component: {fileID: 2851508266222370839}
   - component: {fileID: 5622377452539724336}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 2851508266319877341}
   - component: {fileID: 2851508266319877342}
   - component: {fileID: 2215690516348120684}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 2851508266328307136}
   - component: {fileID: 2851508266328307137}
   - component: {fileID: 4478726321551408268}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 2851508267569961135}
   - component: {fileID: 200464950367470475}
   - component: {fileID: 5016617388188915869}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Elastic_wall_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2851508267569961133}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -393,7 +393,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2851508267569961133}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -411,7 +411,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 3, y: 3}
-  m_EdgeRadius: 1
+  m_EdgeRadius: 0
 --- !u!114 &5016617388188915869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 2851508267875425877}
   - component: {fileID: 2851508267875425878}
   - component: {fileID: 2727091991620757183}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -544,7 +544,7 @@ GameObject:
   - component: {fileID: 2851508268123405850}
   - component: {fileID: 2851508268123405851}
   - component: {fileID: 657881191647967937}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallItem (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
