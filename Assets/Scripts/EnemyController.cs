@@ -1,22 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] float _speed;
-    public GameObject player;
-    private Rigidbody2D rb;
+    public Pathfinding.AIDestinationSetter AI;
+    [SerializeField] float health;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        AI = GetComponent<AIDestinationSetter>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        rb.transform.position = Vector2.MoveTowards(rb.transform.position, player.transform.position, _speed * Time.deltaTime);
+       
+    }
+
+    public void SetTarget(Transform target)
+    {
+        AI.target = target;
     }
 }

@@ -70,6 +70,9 @@ public class LvlGenerator : MonoBehaviour
     			if (Physics2D.OverlapCircle(newPos, _enemiesPrefabs[index].GetComponent<CircleCollider2D>().radius * 2) == null) {
     				var obj = Instantiate(_enemiesPrefabs[index]);
     				obj.transform.position = newPos;
+                    //AAAAAAAAAAAAAAAAAAA
+                    obj.GetComponent<EnemyController>().SetTarget(GameObject.FindWithTag("Player").transform);
+                    //AAAAAAAAAAAAAAAAAAA
     				break;
     			}
     		}
