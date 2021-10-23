@@ -438,7 +438,6 @@ MonoBehaviour:
   _enemiesPrefabs:
   - {fileID: 341939856747376149, guid: 541edbb6913066e48b755cd4a1033980, type: 3}
   camera: {fileID: 2090653694}
-  path: {fileID: 73756163}
   maxObstaclesCount: 15
   minObstaclesCount: 9
   minX: -8

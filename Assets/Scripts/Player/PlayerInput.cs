@@ -23,9 +23,7 @@ public class PlayerInput : MonoBehaviour
 
 
     public Vector2 GetDir() {
-    	#if UNITY_EDITOR
-    		return (endPoint - startPoint).normalized;
-    	#endif
+    	return (endPoint - startPoint).normalized;
     }
 
 
@@ -39,19 +37,16 @@ public class PlayerInput : MonoBehaviour
         foreach (var item in toChangeTime)
             item.SlowDownTime();
 
-    	#if UNITY_EDITOR
-    		startPoint = GetMousePos();
-    	#endif
+        startPoint = GetInputPos();
     }
 
 
     public void EndInput() {
     	isPressing = false;
-    	#if UNITY_EDITOR
-    		endPoint = GetMousePos();
-    	#endif
 
-    	movement.SetDir(GetDir());
+        endPoint = GetInputPos();
+
+        movement.SetDir(GetDir());
     	movement.inMove = true;
     	line.DrawLine(this.gameObject.transform.position, Vector3.zero, Vector3.zero);
         foreach (var item in toChangeTime)
@@ -59,9 +54,19 @@ public class PlayerInput : MonoBehaviour
     }
 
 
-    Vector2 GetMousePos() {
-    	var mousePos = Input.mousePosition;
-		return (Vector2)cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, cam.nearClipPlane));
+
+    Vector2 GetInputPos()
+    {
+        Vector2 toReturnVector;
+#if UNITY_EDITOR
+        var mousePos = Input.mousePosition;
+        toReturnVector = (Vector2)cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, cam.nearClipPlane));
+#else
+
+        toReturnVector = Input.GetTouch(0).position;
+#endif
+
+        return toReturnVector;
     }
 
 
@@ -69,7 +74,7 @@ public class PlayerInput : MonoBehaviour
 
     	// Если персонаж не в движении
     	if (!movement.inMove) {
-	    	#if UNITY_EDITOR
+#if UNITY_EDITOR
 	    		if (Input.GetMouseButtonDown(0)) {
 	    			StartInput();
 	    		}
@@ -77,12 +82,26 @@ public class PlayerInput : MonoBehaviour
 	    		if (Input.GetMouseButtonUp(0)) {
 	    			EndInput();
 	    		}
+#else
 
-	    		if (isPressing) {
-	    			endPoint = GetMousePos();
-	    			line.DrawLine(this.gameObject.transform.position, startPoint, endPoint);
-	    		}
-	    	#endif
-    	}
+            if (Input.touchCount > 0)
+                {
+                    var touch = Input.GetTouch(0);
+
+                    if (touch.phase == TouchPhase.Began)
+                        StartInput();
+
+                    if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+                        EndInput();
+                }
+#endif
+
+                if (isPressing)
+                {
+                    endPoint = GetInputPos();
+                    line.DrawLine(this.gameObject.transform.position, startPoint, endPoint);
+                }
+
+        }
     }
 }
