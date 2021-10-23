@@ -5,7 +5,7 @@ using Pathfinding;
 
 public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
 {
-    public Pathfinding.AIDestinationSetter AI;
+    public AIDestinationSetter AI;
     [SerializeField] float health;
 
     // Start is called before the first frame update
@@ -29,6 +29,16 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
         }
 
         return dir;
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            if (health <= 0)
+                Destroy(this.gameObject);
+        }
     }
 
 
