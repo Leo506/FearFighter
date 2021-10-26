@@ -7,11 +7,13 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
 {
     public AIDestinationSetter AI;
     [SerializeField] float health;
+    EnemyControl control;
 
     // Start is called before the first frame update
     void Start()
     {
         AI = GetComponent<AIDestinationSetter>();
+        control = FindObjectOfType<EnemyControl>();
     }
 
 
@@ -22,7 +24,7 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
 
 
     public Vector2 ChangePlayerDirection(Vector2 dir, Vector3 normal, ref int rebounds) {
-        health--;
+        health -= 10;
 
         if (health > 0) {
             return (Vector2)Vector3.Reflect(dir, normal).normalized;
@@ -36,8 +38,9 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
     {
         if (collision.gameObject.tag == "Player")
         {
-            if (health <= 0)
-                Destroy(this.gameObject);
+            if (health <= 0) {
+                control.DestroyEnemy(this.gameObject);
+            }
         }
     }
 

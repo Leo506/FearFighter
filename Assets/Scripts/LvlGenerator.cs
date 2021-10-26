@@ -14,6 +14,7 @@ public class LvlGenerator : MonoBehaviour
     [SerializeField] GameObject[] _enemiesPrefabs;      // Прафабы врагов
 	[SerializeField] CinemachineVirtualCamera camera;
     [SerializeField] GameObject _exit;                  // Префаб выхода
+    [SerializeField] EnemyControl _control;
 
     GameObject playerObj;
 
@@ -106,6 +107,7 @@ public class LvlGenerator : MonoBehaviour
     				var obj = Instantiate(_enemiesPrefabs[index]);
     				obj.transform.position = newPos;
                     obj.GetComponent<EnemyController>().SetTarget(GameObject.FindWithTag("Player").transform);
+                    _control.countOfEnemy++;
     				break;
     			}
     		}
