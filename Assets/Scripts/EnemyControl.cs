@@ -17,7 +17,7 @@ public class EnemyControl : MonoBehaviour
     	if (countOfEnemy <= 0) {
     		move = FindObjectOfType<PlayerMovement>();
     		generator.SpawnExit();
-    		move.SetDir(Vector2.zero);
+    		move.GoToExit();
     	}
 
     	Destroy(enemy);
