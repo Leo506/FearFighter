@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
 
 	Vector2 direction = Vector2.zero;
 
+    public delegate void MovementDelegate();
+    public event MovementDelegate EndMove;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
             if (dir == Vector2.zero) {
                 direction = dir;
                 inMove = false;
+                EndMove();
             } else {
                 direction = dir;
             }

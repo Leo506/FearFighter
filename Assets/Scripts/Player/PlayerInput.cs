@@ -5,20 +5,35 @@ using System.Linq;
 
 public class PlayerInput : MonoBehaviour
 {
+	bool canInput = true;
+	public bool CanInput {
+		get {
+			return canInput;
+		}
+
+		set {
+			canInput = value;
+		}
+	}
+
     Vector2 startPoint = Vector2.zero;
     Vector2 endPoint = Vector2.zero;
     Camera cam;
     bool isPressing = false;
 
     PlayerLine line;
-    PlayerMovement movement;
+    PlayeLogic logic;
+    
 
     IChangingTime[] toChangeTime;
+
+    public delegate void InputDelegate();
+    public event InputDelegate EndInputEvent;
 
     void Start() {
     	cam = Camera.main;
     	line = GetComponent<PlayerLine>();
-    	movement = GetComponent<PlayerMovement>();
+    	logic = GetComponent<PlayeLogic>();
     }
 
 
@@ -46,8 +61,8 @@ public class PlayerInput : MonoBehaviour
 
         endPoint = GetInputPos();
 
-        movement.SetDir(GetDir());
-    	movement.inMove = true;
+        EndInputEvent();
+
     	line.DrawLine(this.gameObject.transform.position, Vector3.zero, Vector3.zero);
         foreach (var item in toChangeTime)
             item.AccelerateTime();
@@ -72,8 +87,7 @@ public class PlayerInput : MonoBehaviour
 
     void Update() {
 
-    	// Если персонаж не в движении
-    	if (!movement.inMove) {
+    	if (canInput) {
 #if UNITY_EDITOR
 	    		if (Input.GetMouseButtonDown(0)) {
 	    			StartInput();
