@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
 
 
     public Vector2 ChangePlayerDirection(Vector2 dir, Vector3 normal, ref int rebounds) {
-        health -= 10;
+        health --;
 
         if (health > 0) {
             return (Vector2)Vector3.Reflect(dir, normal).normalized;

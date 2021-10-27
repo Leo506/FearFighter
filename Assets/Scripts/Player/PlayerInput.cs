@@ -43,16 +43,13 @@ public class PlayerInput : MonoBehaviour
 
 
     public void StartInput() {
-    	startPoint = Vector2.zero;
-    	endPoint = Vector2.zero;
+    	startPoint = GetInputPos();
     	isPressing = true;
 
         toChangeTime = FindObjectsOfType<MonoBehaviour>().OfType<IChangingTime>().ToArray();
 
         foreach (var item in toChangeTime)
             item.SlowDownTime();
-
-        startPoint = GetInputPos();
     }
 
 
@@ -66,6 +63,9 @@ public class PlayerInput : MonoBehaviour
     	line.DrawLine(this.gameObject.transform.position, Vector3.zero, Vector3.zero);
         foreach (var item in toChangeTime)
             item.AccelerateTime();
+
+        startPoint = Vector2.zero;
+    	endPoint = Vector2.zero;
     }
 
 
@@ -118,4 +118,5 @@ public class PlayerInput : MonoBehaviour
 
         }
     }
+
 }
