@@ -460,8 +460,8 @@ MonoBehaviour:
   maxX: 8
   minY: -8
   maxY: 8
-  minEnemiesCount: 0
-  maxEnemiesCount: 0
+  minEnemiesCount: 3
+  maxEnemiesCount: 7
   distanceToExit: 2.5
 --- !u!114 &1521864740
 MonoBehaviour:

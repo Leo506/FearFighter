@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : ReboundObject
 {
-	public float speed;
-	public int availableRebounds = 1;
-	public bool inMove = false;  //TODO: убрать
-    bool roundEnd = false;
+	public float speed;       // Скорость движения персонажа
+    bool inMove = false;      // Определяет, двигается ли персонаж
+    bool roundEnd = false;    // Определяет, зачищен ли уровень
 
 	Rigidbody2D rb2d;
+    BoxCollider2D box;
 
-	Vector2 direction = Vector2.zero;
 
     public delegate void MovementDelegate();
     public event MovementDelegate EndMove;
@@ -21,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        box = GetComponent<BoxCollider2D>();
     }
 
 
@@ -31,12 +31,14 @@ public class PlayerMovement : MonoBehaviour
 
 
     public void SetDir(Vector2 dir) {
-        if (dir == Vector2.zero)
+        if (dir == Vector2.zero) {
             EndMove();
+            inMove = false;
+            //rb2d.bodyType = RigidbodyType2D.Static;
+        }
 
         Vector2 forCheck;
         ContactPoint2D[] contacts = new ContactPoint2D[10];
-        BoxCollider2D box = GetComponent<BoxCollider2D>();
 
         if (Mathf.Abs(dir.x) >= Mathf.Abs(dir.y)) {
             if (dir.x > 0) {
@@ -66,7 +68,8 @@ public class PlayerMovement : MonoBehaviour
 
        
     	direction = dir;
-        Debug.Log("Dir: " + dir);
+        inMove = true;
+        //rb2d.bodyType = RigidbodyType2D.Dynamic;
         
     }
 
@@ -76,15 +79,16 @@ public class PlayerMovement : MonoBehaviour
             SceneManager.LoadScene("MainScene");
 
 
-        if (!roundEnd) {
-        	var dir = other.gameObject.GetComponent<IChangingDirection>().ChangePlayerDirection(direction, other.contacts[0].normal, ref availableRebounds);
-            Debug.Log("Меняем направление");
-            if (dir == Vector2.zero) {
-                direction = dir;
+        // Если уровень не зачищен и персонаж в движении
+        if (!roundEnd && inMove) {
+
+            // Отскакиваем
+        	Rebound(other);
+            
+            if (direction == Vector2.zero) {
                 inMove = false;
                 EndMove();
-            } else {
-                direction = dir;
+                //rb2d.bodyType = RigidbodyType2D.Static;
             }
         }
     }
