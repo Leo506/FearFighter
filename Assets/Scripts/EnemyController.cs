@@ -71,20 +71,22 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
 
 
     public Vector2 ChangePlayerDirection(Vector2 dir, Vector3 normal, ref int rebounds) {
-        health -= 10;
-
+        
         return Vector2.Reflect(dir, normal).normalized;
 
+    }
+
+    public void GetDamage(float value)
+    {
+        health -= value;
+
+        if (health <= 0)
+            control.DestroyEnemy(this);
     }
 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            if (health <= 0)
-                control.DestroyEnemy(this);
-        }
 
 
         if (state == EnemyStates.DASH_INTO_PLAYER && collision.gameObject.tag == "Player") {

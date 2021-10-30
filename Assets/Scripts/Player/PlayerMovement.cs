@@ -90,9 +90,17 @@ public class PlayerMovement : ReboundObject
         }
     }
 
+    public new void Rebound(Collision2D other)
+    {
+        EnemyController enemy = other.gameObject.GetComponent<EnemyController>();
 
+        if (enemy != null)
+            enemy.GetDamage(10);
 
-    public void GoToExit(GameObject exitObj) {
+        base.Rebound(other);
+    }
+
+        public void GoToExit(GameObject exitObj) {
         Vector2 dir = (exitObj.transform.position - this.transform.position).normalized;
         roundEnd = true;
 
