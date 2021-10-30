@@ -4,22 +4,23 @@ using UnityEngine;
 
 public class EnemyControl : MonoBehaviour
 {
-	public int countOfEnemy = 0;
-    LvlGenerator generator;
-    PlayerMovement move;
+	public static int countOfEnemy = 0;
 
-    void Start() {
-    	generator = FindObjectOfType<LvlGenerator>();
-    }
-
-    public void DestroyEnemy(GameObject enemy) {
+    public void DestroyEnemy(EnemyController enemy) {
     	countOfEnemy--;
-    	if (countOfEnemy <= 0) {
-    		move = FindObjectOfType<PlayerMovement>();
-    		generator.SpawnExit();
-    		move.GoToExit();
-    	}
 
-    	Destroy(enemy);
+        // При смерти врага спавним выпадающие предметы
+        foreach (var item in enemy.items)
+        {
+            var drop = Instantiate(item);
+            drop.transform.position = enemy.transform.position;
+            drop.Init();
+        }
+        Destroy(enemy.gameObject);
+
+        if (countOfEnemy <= 0)
+        {
+            FindObjectOfType<GameController>().ChangeState(GameState.WAITING_DROP);
+        }
     }
 }

@@ -12,17 +12,12 @@ public class LvlOverview : MonoBehaviour
     public float overviewTime;
 
 
-    void Start() {
-    	StartOverview();
+    public void StartOverview(GameController controller) {
+    	StartCoroutine(Overview(controller));
     }
 
 
-    public void StartOverview() {
-    	StartCoroutine(Overview());
-    }
-
-
-    IEnumerator Overview() {
+    IEnumerator Overview(GameController controller) {
     	var step = (endCamSize - startCamSize) / (overviewTime * 100);
 
     	camera.m_Lens.OrthographicSize = startCamSize;
@@ -36,7 +31,6 @@ public class LvlOverview : MonoBehaviour
     		yield return new WaitForSeconds(0.01f);
     	}
 
-    	FindObjectOfType<LvlGenerator>().SpawnPlayer();
-    	FindObjectOfType<LvlGenerator>().SpawnEnemies();
+        controller.ChangeState(GameState.SPAWNING);
     }
 }

@@ -7,7 +7,7 @@ public class PlayerMovement : ReboundObject
 {
 	public float speed;       // Скорость движения персонажа
     bool inMove = false;      // Определяет, двигается ли персонаж
-    bool roundEnd = false;    // Определяет, зачищен ли уровень
+    public bool roundEnd = false;    // Определяет, зачищен ли уровень
 
 	Rigidbody2D rb2d;
     BoxCollider2D box;
@@ -31,10 +31,9 @@ public class PlayerMovement : ReboundObject
 
 
     public void SetDir(Vector2 dir) {
-        if (dir == Vector2.zero) {
+        if (dir == Vector2.zero  && !roundEnd) {
             EndMove();
             inMove = false;
-            //rb2d.bodyType = RigidbodyType2D.Static;
         }
 
         Vector2 forCheck;
@@ -69,7 +68,6 @@ public class PlayerMovement : ReboundObject
        
     	direction = dir;
         inMove = true;
-        //rb2d.bodyType = RigidbodyType2D.Dynamic;
         
     }
 
@@ -88,15 +86,13 @@ public class PlayerMovement : ReboundObject
             if (direction == Vector2.zero) {
                 inMove = false;
                 EndMove();
-                //rb2d.bodyType = RigidbodyType2D.Static;
             }
         }
     }
 
 
 
-    public void GoToExit() {
-        GameObject exitObj = GameObject.FindWithTag("Exit");
+    public void GoToExit(GameObject exitObj) {
         Vector2 dir = (exitObj.transform.position - this.transform.position).normalized;
         roundEnd = true;
 

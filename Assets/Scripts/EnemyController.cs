@@ -22,6 +22,8 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
     Vector2 startDashPoint;  // Точка, с которой враг начинает свой "дэш"
     Vector2 direction;
 
+    public DroppingItem[] items;  // Выпадающие предметы
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,13 +71,10 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
 
 
     public Vector2 ChangePlayerDirection(Vector2 dir, Vector3 normal, ref int rebounds) {
-        health --;
+        health -= 10;
 
-        if (health > 0) {
-            return (Vector2)Vector3.Reflect(dir, normal).normalized;
-        }
+        return Vector2.Reflect(dir, normal).normalized;
 
-        return dir;
     }
 
 
@@ -84,7 +83,7 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
         if (collision.gameObject.tag == "Player")
         {
             if (health <= 0)
-                control.DestroyEnemy(this.gameObject);
+                control.DestroyEnemy(this);
         }
 
 
@@ -105,5 +104,10 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
 
     public void AccelerateTime() {
         path.maxSpeed *= 4;
+    }
+
+    public void Init()
+    {
+        EnemyControl.countOfEnemy++;
     }
 }

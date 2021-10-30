@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAYIexSEFzIUwIAAPYEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1zmzAQ/SsenZsOOHYaemux4/TgOBOnkwsXGS1GYyEx+ojtZPzfuxJgKJ2eEO+9Xb39gE/Cpakht0qvNGdrxYB8nxB/Jl8mPfkIJ7pXcss/oNO8cWZLL6JB80ItV4jHPsyoCqzm+Q+5F14cIegkL5SulmwPqTLWIFxQYQAprayPlgh9TsgJHzeJDznjafrNnz7wlESTCx5zkBZ0L+2EnaxROZkLWtXAvOVeHCetOk6CTGIxrSL6GiVzn18JwU3rhthzHapNaW0c1oICxilWFyzM8LUEvi+tdzoM3hSFAdva0vS84Bqb1GQlP1XTuYqaQ+PtnQrn75nO74KvJun6H/4mDnShVfXY3RtH/g5b8vzwQs85NXbQ2iG86I3HoUVHKg50J+CtBPmkVlo5yZC02vlQZ2C66F+vpaUl5Iceb6yOQFf/f0C+hkuo/pQKXu1C72cNsBUq9DuMHzRO5xcaDsth2hSIehe/DbzS/XCLWuKBa2ORaquU3t5OOe2lZBl65qtxNlVaQoBb0zVIKuz5GdPY8QhH3ODaEfNA/ffSXt5y3WcwCglwr4+iEfWsjtdhmVId12DKjbOCS+hNe+IJ+5QqKZsNG/akC9s6XdB8ELZ3nP29WgTm8RQo3Ce3d5TNgN0UMexmMxbf76bT+9skIWH3uMQ6qXhujLbtwanJPrnEPet+I5OVpnXYdqbpccU/KjVoOZeF2uYaQG6aDFfjoPES/DLZknFs0Bas5TLMm3xmRKj8ACy7JspCpcuT1TTrs2Sk5u/KeiQjafhvZORCLn8AUEsDBBQAAAgIAAAYIewhbbfXbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM01VFQSi9KLMgoBooYgjilmSkgdrRSqqmhUWpiqoWlsVliiklqim6aYWqSiUmKoUWSkZGFsaWlUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAAAYIexSEFzIUwIAAPYEAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAYIewhbbfXbQAAAHgAAAAJACQAAAAAAAAAAAAAAKACAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAWAMAAAAA
+    dataString: UEsDBBQAAAgIAAAoIexSEFzIUwIAAPYEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1zmzAQ/SsenZsOOHYaemux4/TgOBOnkwsXGS1GYyEx+ojtZPzfuxJgKJ2eEO+9Xb39gE/Cpakht0qvNGdrxYB8nxB/Jl8mPfkIJ7pXcss/oNO8cWZLL6JB80ItV4jHPsyoCqzm+Q+5F14cIegkL5SulmwPqTLWIFxQYQAprayPlgh9TsgJHzeJDznjafrNnz7wlESTCx5zkBZ0L+2EnaxROZkLWtXAvOVeHCetOk6CTGIxrSL6GiVzn18JwU3rhthzHapNaW0c1oICxilWFyzM8LUEvi+tdzoM3hSFAdva0vS84Bqb1GQlP1XTuYqaQ+PtnQrn75nO74KvJun6H/4mDnShVfXY3RtH/g5b8vzwQs85NXbQ2iG86I3HoUVHKg50J+CtBPmkVlo5yZC02vlQZ2C66F+vpaUl5Iceb6yOQFf/f0C+hkuo/pQKXu1C72cNsBUq9DuMHzRO5xcaDsth2hSIehe/DbzS/XCLWuKBa2ORaquU3t5OOe2lZBl65qtxNlVaQoBb0zVIKuz5GdPY8QhH3ODaEfNA/ffSXt5y3WcwCglwr4+iEfWsjtdhmVId12DKjbOCS+hNe+IJ+5QqKZsNG/akC9s6XdB8ELZ3nP29WgTm8RQo3Ce3d5TNgN0UMexmMxbf76bT+9skIWH3uMQ6qXhujLbtwanJPrnEPet+I5OVpnXYdqbpccU/KjVoOZeF2uYaQG6aDFfjoPES/DLZknFs0Bas5TLMm3xmRKj8ACy7JspCpcuT1TTrs2Sk5u/KeiQjafhvZORCLn8AUEsDBBQAAAgIAAAoIewhbbfXbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM01VFQSi9KLMgoBooYgjilmSkgdrRSqqmhUWpiqoWlsVliiklqim6aYWqSiUmKoUWSkZGFsaWlUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAAAoIexSEFzIUwIAAPYEAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAoIewhbbfXbQAAAHgAAAAJACQAAAAAAAAAAAAAAKACAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAWAMAAAAA
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: 1521864739}
   - component: {fileID: 1521864740}
   - component: {fileID: 1521864737}
+  - component: {fileID: 1521864741}
   m_Layer: 0
   m_Name: GameControllerObject
   m_TagString: Untagged
@@ -415,7 +416,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd6d3b41dd16636b4bbe0ecb7fd6d06f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countOfEnemy: 0
 --- !u!4 &1521864738
 Transform:
   m_ObjectHideFlags: 0
@@ -453,7 +453,6 @@ MonoBehaviour:
   - {fileID: 341939856747376149, guid: 541edbb6913066e48b755cd4a1033980, type: 3}
   camera: {fileID: 2090653694}
   _exit: {fileID: 301722548441770465, guid: fff133b6d54d85840961316472c26e15, type: 3}
-  _control: {fileID: 1521864737}
   maxObstaclesCount: 15
   minObstaclesCount: 9
   minX: -8
@@ -479,6 +478,18 @@ MonoBehaviour:
   startCamSize: 5
   endCamSize: 25
   overviewTime: 1
+--- !u!114 &1521864741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521864736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58746e9efd88a9d41b5bfd1d4318f3ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1707966733
 GameObject:
   m_ObjectHideFlags: 3

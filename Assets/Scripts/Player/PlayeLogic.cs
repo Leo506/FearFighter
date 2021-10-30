@@ -17,4 +17,11 @@ public class PlayeLogic : MonoBehaviour
     	input.EndInputEvent += () => { input.CanInput = false; move.SetDir(input.GetDir()); };
     	move.EndMove += () => input.CanInput = true;
     }
+
+    public void EndRound()
+    {
+        input.CanInput = false;
+        move.roundEnd = true;
+        move.SetDir(Vector2.zero);
+    }
 }

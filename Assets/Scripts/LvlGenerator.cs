@@ -14,7 +14,6 @@ public class LvlGenerator : MonoBehaviour
     [SerializeField] GameObject[] _enemiesPrefabs;      // Прафабы врагов
 	[SerializeField] CinemachineVirtualCamera camera;
     [SerializeField] GameObject _exit;                  // Префаб выхода
-    [SerializeField] EnemyControl _control;
 
     GameObject playerObj;
 
@@ -37,11 +36,7 @@ public class LvlGenerator : MonoBehaviour
     public float distanceToExit = 5f;
 
 
-	void Awake() {
-		GenerateRoom();
-        AstarPath.active.Scan();
-	}
-
+	
 
     public void GenerateRoom() {
     	if (_outerWalls != null)
@@ -68,6 +63,8 @@ public class LvlGenerator : MonoBehaviour
     			}
     		}
     	}
+
+        AstarPath.active.Scan();
     }
 
     
@@ -85,13 +82,15 @@ public class LvlGenerator : MonoBehaviour
     }
 
 
-    public void SpawnPlayer() {
+    public GameObject SpawnPlayer() {
     	_playerSpawner.GetComponent<BoxCollider2D>().enabled = false;
 
     	playerObj = Instantiate(_playerPrefab);
     	playerObj.transform.localPosition = _playerSpawner.transform.position;
 
     	camera.Follow = playerObj.transform;
+
+        return playerObj;
     }
 
 
@@ -106,8 +105,8 @@ public class LvlGenerator : MonoBehaviour
     			if (Physics2D.OverlapCircle(newPos, _enemiesPrefabs[index].GetComponent<CircleCollider2D>().radius * 2) == null) {
     				var obj = Instantiate(_enemiesPrefabs[index]);
     				obj.transform.position = newPos;
-                    obj.GetComponent<EnemyController>().SetTarget(GameObject.FindWithTag("Player").transform);
-                    _control.countOfEnemy++;
+                    obj.GetComponent<EnemyController>().SetTarget(playerObj.transform);
+                    obj.GetComponent<EnemyController>().Init();
     				break;
     			}
     		}
@@ -115,26 +114,34 @@ public class LvlGenerator : MonoBehaviour
     }
 
 
-    public void SpawnExit()
+    public GameObject SpawnExit()
     {
-        Vector2[] availableDir = { Vector2.up, Vector2.right, Vector2.down, Vector2.left };
-        Vector2 pos = (Vector2)playerObj.transform.position + availableDir[Random.Range(0, availableDir.Length)] * distanceToExit;
-
         Vector2 size = _exit.GetComponent<BoxCollider2D>().size;
+        List<Vector2> availableDir = new List<Vector2> { Vector2.up, Vector2.down, Vector2.right, Vector2.left};
+        Vector2 pos = Vector2.zero;
 
-        float xTopRight = pos.x + (size.x * _exit.transform.localScale.x) / 2;
-        float yTopRight = pos.y + (size.y * _exit.transform.localScale.y) / 2;
-
-        float xBottomLeft = pos.x - (size.x * _exit.transform.localScale.x) / 2;
-        float yBottomLeft = pos.y - (size.y * _exit.transform.localScale.y) / 2;
-
-        Collider2D[] colliders = Physics2D.OverlapAreaAll(new Vector2(xTopRight, yTopRight), new Vector2(xBottomLeft, yBottomLeft));
-
-        foreach (var item in colliders)
+        for (int i = 0; i < 4; i++)
         {
-            Destroy(item.gameObject);
-        }
+            int index = Random.Range(0, availableDir.Count);
+            pos = (Vector2)playerObj.transform.position + availableDir[index] * distanceToExit;
 
-        Instantiate(_exit).transform.position = pos;
+            float xTopRight = pos.x + (size.x * _exit.transform.localScale.x) / 2;
+            float yTopRight = pos.y + (size.y * _exit.transform.localScale.y) / 2;
+
+            float xBottomLeft = pos.x - (size.x * _exit.transform.localScale.x) / 2;
+            float yBottomLeft = pos.y - (size.y * _exit.transform.localScale.y) / 2;
+
+            Collider2D[] colliders = Physics2D.OverlapAreaAll(new Vector2(xTopRight, yTopRight), new Vector2(xBottomLeft, yBottomLeft));
+
+            if (colliders.Length == 0)
+                break;
+            else
+                availableDir.RemoveAt(index);
+        }
+        
+        var obj = Instantiate(_exit);
+        obj.transform.position = pos;
+
+        return obj;
     }
 }
