@@ -88,6 +88,10 @@ public class PlayerMovement : ReboundObject
                 EndMove();
             }
         }
+
+        BonusItem item = other.gameObject.GetComponent<BonusItem>();
+        if (item != null)
+            item.ActivateBonusItem();
     }
 
     public new void Rebound(Collision2D other)

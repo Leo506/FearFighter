@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour
         {
             player = generator.SpawnPlayer().GetComponent<PlayeLogic>();  // Спавн персонажа
             generator.SpawnEnemies();                                     // Спавн врагов
+            generator.SpawnBonusItems();                                  // Спавн бонусных предметов
             currentState = GameState.PLAY;                                // Переход в состояние игры
         }
 

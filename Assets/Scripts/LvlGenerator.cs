@@ -14,6 +14,7 @@ public class LvlGenerator : MonoBehaviour
     [SerializeField] GameObject[] _enemiesPrefabs;      // Прафабы врагов
 	[SerializeField] CinemachineVirtualCamera camera;
     [SerializeField] GameObject _exit;                  // Префаб выхода
+    [SerializeField] BonusItem[] _items;                // Префабы бонусных предметов
 
     GameObject playerObj;
 
@@ -34,6 +35,10 @@ public class LvlGenerator : MonoBehaviour
 
     [Header("Дистанция до выхода")]
     public float distanceToExit = 5f;
+
+    [Header("Количество бонусных предметов")]
+    public int minBonusCount = 3;
+    public int maxBonusCount = 7;
 
 
 	
@@ -143,5 +148,29 @@ public class LvlGenerator : MonoBehaviour
         obj.transform.position = pos;
 
         return obj;
+    }
+
+
+    public void SpawnBonusItems()
+    {
+        var countOfItems = Random.Range(minBonusCount, maxBonusCount);
+
+        for (int i = 0; i < countOfItems; i++)
+        {
+            var index = Random.Range(0, _items.Length);
+
+            for (int j = 0; j < 10; j++)
+            {
+                Vector2 pos = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+
+                if (CheckPos(pos, _items[index].gameObject))
+                {
+                    var obj = Instantiate(_items[index]);
+                    obj.transform.position = pos;
+                    obj.Init();
+                    break;
+                }
+            }
+        }
     }
 }

@@ -453,6 +453,8 @@ MonoBehaviour:
   - {fileID: 341939856747376149, guid: 541edbb6913066e48b755cd4a1033980, type: 3}
   camera: {fileID: 2090653694}
   _exit: {fileID: 301722548441770465, guid: fff133b6d54d85840961316472c26e15, type: 3}
+  _items:
+  - {fileID: 756726756564180799, guid: d40b100ea2bc36448a2a4a7a0aef5e1b, type: 3}
   maxObstaclesCount: 15
   minObstaclesCount: 9
   minX: -8
@@ -462,6 +464,8 @@ MonoBehaviour:
   minEnemiesCount: 3
   maxEnemiesCount: 7
   distanceToExit: 2.5
+  minBonusCount: 3
+  maxBonusCount: 7
 --- !u!114 &1521864740
 MonoBehaviour:
   m_ObjectHideFlags: 0
