@@ -136,18 +136,35 @@ public class LvlGenerator : MonoBehaviour
             float xBottomLeft = pos.x - (size.x * _exit.transform.localScale.x) / 2;
             float yBottomLeft = pos.y - (size.y * _exit.transform.localScale.y) / 2;
 
-            Collider2D[] colliders = Physics2D.OverlapAreaAll(new Vector2(xTopRight, yTopRight), new Vector2(xBottomLeft, yBottomLeft));
+            Collider2D colliders = Physics2D.OverlapArea(new Vector2(xTopRight, yTopRight), new Vector2(xBottomLeft, yBottomLeft));
 
-            if (colliders.Length == 0)
+            if (colliders == null && CheckPlayerReach(pos))
                 break;
             else
                 availableDir.RemoveAt(index);
         }
-        
-        var obj = Instantiate(_exit);
+
+        GameObject obj = null;
+
+        obj = Instantiate(_exit);
         obj.transform.position = pos;
 
         return obj;
+    }
+
+    //TODO удалить эту функцию
+    public void SpawnEx()
+    {
+        playerObj = FindObjectOfType<PlayeLogic>().gameObject;
+        SpawnExit();
+    }
+
+    bool CheckPlayerReach(Vector2 pos)
+    {
+        playerObj.GetComponent<Collider2D>().enabled = false;
+        RaycastHit2D hit = Physics2D.Linecast(playerObj.transform.position, pos);
+        playerObj.GetComponent<Collider2D>().enabled = true;
+        return hit.collider == null;
     }
 
 

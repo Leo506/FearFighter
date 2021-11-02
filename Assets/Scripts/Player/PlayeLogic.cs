@@ -14,14 +14,27 @@ public class PlayeLogic : MonoBehaviour
     	input = GetComponent<PlayerInput>();
     	move = GetComponent<PlayerMovement>();
 
-    	input.EndInputEvent += () => { input.CanInput = false; move.SetDir(input.GetDir()); };
-    	move.EndMove += () => input.CanInput = true;
+    	input.EndInputEvent += EndInput;
+    	move.EndMove += EndMove;
+    }
+
+    void EndInput()
+    {
+        input.CanInput = false;
+        move.SetDir(input.GetDir());
+    }
+
+    void EndMove()
+    {
+        input.CanInput = true;
     }
 
     public void EndRound()
     {
-        input.CanInput = false;
         move.roundEnd = true;
+        move.EndMove -= EndMove;
+        
         move.SetDir(Vector2.zero);
+        Debug.Log("Уровень зачищен. Ввод невозможен. roundEnd = " + move.roundEnd);
     }
 }

@@ -22,7 +22,6 @@ public class DroppingItem : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         dir = (playerPos - (Vector2)transform.position).normalized;
         destPos = playerPos;
-        Debug.Log("Движение к персонажу");
     }
 
     private void Update()

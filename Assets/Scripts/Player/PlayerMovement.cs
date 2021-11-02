@@ -32,6 +32,7 @@ public class PlayerMovement : ReboundObject
 
     public void SetDir(Vector2 dir) {
         if (dir == Vector2.zero  && !roundEnd) {
+            Debug.Log("EndMove in SetDir");
             EndMove();
             inMove = false;
         }
@@ -78,6 +79,7 @@ public class PlayerMovement : ReboundObject
 
 
         // Если уровень не зачищен и персонаж в движении
+        Debug.Log("roundEnd before condition = " + roundEnd + " and condition = " + (!roundEnd && inMove));
         if (!roundEnd && inMove) {
 
             // Отскакиваем
@@ -85,7 +87,8 @@ public class PlayerMovement : ReboundObject
             
             if (direction == Vector2.zero) {
                 inMove = false;
-                EndMove();
+                Debug.Log("roundEnd = " + roundEnd);
+                EndMove?.Invoke();
             }
         }
 

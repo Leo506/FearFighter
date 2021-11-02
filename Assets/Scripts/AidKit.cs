@@ -8,7 +8,6 @@ public class AidKit : BonusItem
     {
         base.ActivateBonusItem();
         // Увеличение количества храбрости
-        Debug.Log("Храбрость увеличена");
         Destroy(this.gameObject);
     }
 }
