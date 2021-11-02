@@ -90,6 +90,7 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
 
 
         if (state == EnemyStates.DASH_INTO_PLAYER && collision.gameObject.tag == "Player") {
+            collision.gameObject.GetComponent<PlayeLogic>().GetDamage(10);
             direction = (startDashPoint - (Vector2)transform.position).normalized;
             state = EnemyStates.RETURN_TO_START_POINT;
         } else {

@@ -7,7 +7,7 @@ public class AidKit : BonusItem
     public override void ActivateBonusItem()
     {
         base.ActivateBonusItem();
-        // Увеличение количества храбрости
+        FindObjectOfType<PlayeLogic>().PlayerHP += 10;
         Destroy(this.gameObject);
     }
 }
