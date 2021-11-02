@@ -79,7 +79,6 @@ public class PlayerMovement : ReboundObject
 
 
         // Если уровень не зачищен и персонаж в движении
-        Debug.Log("roundEnd before condition = " + roundEnd + " and condition = " + (!roundEnd && inMove));
         if (!roundEnd && inMove) {
 
             // Отскакиваем
@@ -87,7 +86,6 @@ public class PlayerMovement : ReboundObject
             
             if (direction == Vector2.zero) {
                 inMove = false;
-                Debug.Log("roundEnd = " + roundEnd);
                 EndMove?.Invoke();
             }
         }

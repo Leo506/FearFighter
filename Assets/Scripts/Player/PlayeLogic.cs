@@ -57,16 +57,16 @@ public class PlayeLogic : MonoBehaviour
         move.EndMove -= EndMove;
         
         move.SetDir(Vector2.zero);
-        Debug.Log("Уровень зачищен. Ввод невозможен. roundEnd = " + move.roundEnd);
     }
 
     public void GetDamage(float value)
     {
         playerHP -= value;
         if (playerHP <= 0)
+        {
+            uiController.GameOver();
             Destroy(this.gameObject);
-
-        float tmp = 0.25f / 100f;
+        }
 
         uiController.ShowPlayerHP(100, playerHP);
     }

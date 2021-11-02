@@ -22,5 +22,6 @@ public class EnemyControl : MonoBehaviour
         {
             FindObjectOfType<GameController>().ChangeState(GameState.WAITING_DROP);
         }
+        Debug.Log("Count of enemies: " + countOfEnemy);
     }
 }

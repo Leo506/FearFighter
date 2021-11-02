@@ -101,6 +101,7 @@ public class LvlGenerator : MonoBehaviour
 
     public void SpawnEnemies() {
     	var countOfEnemies = Random.Range(minEnemiesCount, maxEnemiesCount);
+        EnemyControl.countOfEnemy = 0;
 
     	for (int i = 0; i < countOfEnemies; i++) {
     		var index = Random.Range(0, _enemiesPrefabs.Length);
@@ -171,6 +172,7 @@ public class LvlGenerator : MonoBehaviour
     public void SpawnBonusItems()
     {
         var countOfItems = Random.Range(minBonusCount, maxBonusCount);
+        DroppingItem.countOfDrop = 0;
 
         for (int i = 0; i < countOfItems; i++)
         {
