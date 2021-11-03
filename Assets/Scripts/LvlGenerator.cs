@@ -139,7 +139,7 @@ public class LvlGenerator : MonoBehaviour
 
             Collider2D colliders = Physics2D.OverlapArea(new Vector2(xTopRight, yTopRight), new Vector2(xBottomLeft, yBottomLeft));
 
-            if (colliders == null && CheckPlayerReach(pos))
+            if (colliders == null && CheckPlayerReach((pos - (Vector2)playerObj.transform.position), size * _exit.transform.localScale))
                 break;
             else
                 availableDir.RemoveAt(index);
@@ -160,12 +160,21 @@ public class LvlGenerator : MonoBehaviour
         SpawnExit();
     }
 
-    bool CheckPlayerReach(Vector2 pos)
+    bool CheckPlayerReach(Vector2 dir, Vector2 size)
     {
         playerObj.GetComponent<Collider2D>().enabled = false;
-        RaycastHit2D hit = Physics2D.Linecast(playerObj.transform.position, pos);
+        RaycastHit2D hit = Physics2D.BoxCast(playerObj.transform.position, size, 0f, dir);
         playerObj.GetComponent<Collider2D>().enabled = true;
-        return hit.collider == null;
+
+        if (hit.collider == null)
+            return true;
+        else
+        {
+            if (Vector2.Distance(hit.collider.transform.position, playerObj.transform.position) <= distanceToExit)
+                return false;
+
+            return true;
+        }
     }
 
 
