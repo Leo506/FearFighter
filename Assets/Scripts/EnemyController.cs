@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
+
+// Возможные состояния врага
 enum EnemyStates {
     GO_TO_PLAYER,
     DASH_INTO_PLAYER,
@@ -11,18 +13,22 @@ enum EnemyStates {
 
 public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
 {
-    public AIDestinationSetter AI;
-    [SerializeField] float health;
-    EnemyControl control;
+    public AIDestinationSetter AI;                                      // Компонент для установки цели, за которой нужно двигаться
+    public float health = 10;                                           // Количество здоровья врага
+    public float damage = 10;                                           // Сколько урона наносит враг по персонажу
+    EnemyControl control;                                               // Объкт, следящий за количеством врагов на сцене
 
     AIPath path;
-    EnemyStates state = EnemyStates.GO_TO_PLAYER;
+
+    EnemyStates state = EnemyStates.GO_TO_PLAYER;                       // Текущее состояние врага
+    
     Rigidbody2D rb2d;
 
-    Vector2 startDashPoint;  // Точка, с которой враг начинает свой "дэш"
-    Vector2 direction;
+    Vector2 startDashPoint;                                             // Точка, с которой враг начинает свой "дэш"
+    Vector2 direction;                                                  // Направление на игрока (используется во время "дэша")
 
-    public DroppingItem[] items;  // Выпадающие предметы
+    public DroppingItem[] items;                                        // Выпадающие предметы
+
 
     // Start is called before the first frame update
     void Start()
@@ -34,9 +40,12 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
     }
 
 
-    void FixedUpdate() {
-
+    void FixedUpdate()
+    {
+        // Если находимся в состоянии следования за игроком
         if (state == EnemyStates.GO_TO_PLAYER) {
+
+            // И дистанция до него меньше определённого значения - "дэш"
             if (Vector2.Distance(transform.position, AI.target.transform.position) <= path.endReachedDistance)
                 Dash();
         }
@@ -47,6 +56,7 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
             rb2d.velocity = direction * path.maxSpeed * 100 * Time.fixedDeltaTime;
         }
 
+        // Если возвращаемся в стартовую точку
         if (state == EnemyStates.RETURN_TO_START_POINT) {
             if (Vector2.Distance(transform.position, startDashPoint) < 0.1f) {
                 path.canMove = true;
@@ -90,7 +100,7 @@ public class EnemyController : MonoBehaviour, IChangingDirection, IChangingTime
 
 
         if (state == EnemyStates.DASH_INTO_PLAYER && collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<PlayeLogic>().GetDamage(10);
+            collision.gameObject.GetComponent<PlayeLogic>().GetDamage(damage);
             direction = (startDashPoint - (Vector2)transform.position).normalized;
             state = EnemyStates.RETURN_TO_START_POINT;
         } else {

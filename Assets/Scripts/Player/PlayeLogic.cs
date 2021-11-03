@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayeLogic : MonoBehaviour
 {
     public float maxHP= 100;
+    public float damage = 10;
 
     float playerHP;
     public float PlayerHP

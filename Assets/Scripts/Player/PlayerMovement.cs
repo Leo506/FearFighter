@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : ReboundObject
 {
-	public float speed;       // Скорость движения персонажа
-    bool inMove = false;      // Определяет, двигается ли персонаж
+	public float speed;              // Скорость движения персонажа
+    bool inMove = false;             // Определяет, двигается ли персонаж
     public bool roundEnd = false;    // Определяет, зачищен ли уровень
+
+    PlayeLogic logic;
 
 	Rigidbody2D rb2d;
     BoxCollider2D box;
@@ -19,6 +21,7 @@ public class PlayerMovement : ReboundObject
     // Start is called before the first frame update
     void Start()
     {
+        logic = GetComponent<PlayeLogic>();
         rb2d = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
     }
@@ -100,7 +103,7 @@ public class PlayerMovement : ReboundObject
         EnemyController enemy = other.gameObject.GetComponent<EnemyController>();
 
         if (enemy != null)
-            enemy.GetDamage(10);
+            enemy.GetDamage(logic.damage);
 
         base.Rebound(other);
     }
