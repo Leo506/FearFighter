@@ -29,7 +29,12 @@ public class FireBallController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.gameObject.GetComponent<BossController>() == null && collision.collider.gameObject.GetComponent<FireBallController>() == null)
+        if (collision.collider.gameObject.tag == "Player")
+        {
+            collision.collider.GetComponent<PlayeLogic>().GetDamage(25);
+            Destroy(this.gameObject);
+        } 
+        else if (collision.collider.gameObject.GetComponent<BossController>() == null && collision.collider.gameObject.GetComponent<FireBallController>() == null)
             Destroy(this.gameObject);
     }
 }

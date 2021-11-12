@@ -84,12 +84,16 @@ public class PlayerMovement : ReboundObject
         // Если уровень не зачищен и персонаж в движении
         if (!roundEnd && inMove) {
 
+
             // Отскакиваем
-        	Rebound(other);
+            Rebound(other);
+            Debug.Log("Rebound!");
+            
             
             if (direction == Vector2.zero) {
                 inMove = false;
                 EndMove?.Invoke();
+                logic.invulnerability = false;
             }
         }
 

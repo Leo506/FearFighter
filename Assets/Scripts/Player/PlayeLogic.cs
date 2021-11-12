@@ -8,6 +8,7 @@ public class PlayeLogic : MonoBehaviour
     public float maxHP= 100;
     public float damage = 10;
 
+    public bool invulnerability = false;
     float playerHP;
     public float PlayerHP
     {
@@ -62,13 +63,14 @@ public class PlayeLogic : MonoBehaviour
 
     public void GetDamage(float value)
     {
-        playerHP -= value;
+        if (!invulnerability)
+            playerHP -= value;
         if (playerHP <= 0)
         {
             uiController.GameOver();
             Destroy(this.gameObject);
         }
 
-        uiController.ShowPlayerHP(100, playerHP);
+        uiController.ShowPlayerHP(maxHP, playerHP);
     }
 }
