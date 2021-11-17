@@ -87,7 +87,7 @@ public class PlayerMovement : ReboundObject
 
             // Отскакиваем
             Rebound(other);
-            Debug.Log("Rebound!");
+            Debug.Log("Rebound with " + other.collider.gameObject.name + " Direction: " + direction);
             
             
             if (direction == Vector2.zero) {

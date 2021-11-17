@@ -10,12 +10,15 @@ public class DashBlock : MonoBehaviour, IChangingDirection
 
     public Vector2 ChangePlayerDirection(Vector2 dir, Vector3 normal, ref int rebounds)
     {
-        Debug.Log("Collison with dash block");
         controller.ActiveNextBlock();
+
         StartCoroutine(DeactivateObj());
+
         logic.invulnerability = true;
-        rebounds--;
-        return (boss.transform.position - this.transform.position).normalized;
+
+
+        boss.GetDamage(25);
+        return (boss.transform.position - logic.transform.position).normalized * 1.5f;
     }
 
     // Start is called before the first frame update

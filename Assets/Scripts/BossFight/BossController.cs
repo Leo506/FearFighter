@@ -16,15 +16,30 @@ public class BossController : MonoBehaviour
     public int countOfFire = 10;
     public float distanceMultiplier = 1;
 
-    [SerializeField] FireBallController firePrefab;  // Префаб снаряда, который будет пускать босс
+    [SerializeField] FireBallController _firePrefab;  // Префаб снаряда, который будет пускать босс
+    [SerializeField] UnityEngine.UI.Slider _hpSlider;
+    [SerializeField] EnemyController _helper;
 
     CircleCollider2D cc2D;
+    PlayeLogic playe;
+
+    int countOfHelpers = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         cc2D = GetComponent<CircleCollider2D>();
+        playe = FindObjectOfType<PlayeLogic>();
         StartCoroutine(Delay());
+    }
+
+    public void GetDamage(float value)
+    {
+        HP -= value;
+        _hpSlider.value = HP;
+
+        if (HP <= 50)
+            currentState = BossState.SECOND_STATE;
     }
 
     void Fire()
@@ -39,11 +54,19 @@ public class BossController : MonoBehaviour
                 float x = Mathf.Cos(angle) * radius * (float)j/3 + this.transform.position.x;
                 float y = Mathf.Sin(angle) * radius * (float)j / 3 + this.transform.position.y;
 
-                var fireBall = Instantiate(firePrefab);
+                var fireBall = Instantiate(_firePrefab);
                 fireBall.transform.position = new Vector2(x, y);
                 fireBall.SetDir(fireBall.transform.position - this.transform.position);
             }
+
+            /*if (currentState == BossState.SECOND_STATE && countOfHelpers + 1 <= 6)
+            {
+                countOfHelpers++;
+                Instantiate(_helper).SetTarget(playe.transform);
+            }*/
         }
+
+        
 
         StartCoroutine(Delay());
     }

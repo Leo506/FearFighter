@@ -17,9 +17,9 @@ public class FireBallController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+        rb2d.velocity = direction * speed * Time.fixedDeltaTime;
     }
 
     public void SetDir(Vector2 dir)
